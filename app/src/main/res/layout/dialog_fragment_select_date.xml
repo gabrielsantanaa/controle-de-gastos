@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    style="@style/Widget.App.AlertDialog"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearLayoutCompat"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonPreviousMonth"
+            style="@style/Widget.App.IconButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:iconSize="16dp"
+            app:icon="@drawable/ic_round_arrow_back_ios_24"
+            app:iconTint="@color/white"
+            app:rippleColor="@color/white"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textViewCurrentYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            tools:text="2021"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="@color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonNextMonth"
+            style="@style/Widget.App.IconButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:iconSize="16dp"
+            app:icon="@drawable/ic_round_arrow_forward_ios_24"
+            app:iconTint="@color/white"
+            app:rippleColor="@color/white"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        style="@style/Widget.App.RecyclerView.Horizontal.Scrollbar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat"
+        app:spanCount="5" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_current_date"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/select_date_dialog_fragment_current_date_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recycler" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_close"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/select_date_dialog_fragment_close_button"
+        app:layout_constraintEnd_toStartOf="@+id/button_current_date"
+        app:layout_constraintTop_toBottomOf="@+id/recycler" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

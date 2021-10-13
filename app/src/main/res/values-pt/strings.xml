@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    Add transactions fragment  -->
+    <string name="add_transaction_toolbar_title">Nova transação</string>
+    <string name="add_transaction_text_hint_title">Título</string>
+    <string name="add_transaction_text_hint_description">Descrição</string>
+    <string name="add_transaction_text_hint_amount">Valor</string>
+    <string name="add_transaction_button_save">Salvar</string>
+    <string name="closing_confirmation_dialog_title">Descartar dados?</string>
+    <string name="closing_confirmation_dialog_message">Todas as alterações serão perdidas ao sair.</string>
+    <string name="closing_confirmation_dialog_positive_button">Descartar</string>
+    <string name="closing_confirmation_dialog_negative_button">Cancelar</string>
+    <string name="incomplete_fields_snackbar_message">Há campos incompletos</string>
+
+    <!--    Transaction categories   -->
+    <string name="category_food">Comida</string>
+    <string name="category_fastfood">Lanche</string>
+    <string name="category_transport">Transporte</string>
+    <string name="category_salary">Salário</string>
+    <string name="category_several">Diversos</string>
+
+    <!--  Transaction types  -->
+    <string name="type_income">Rendimento</string>
+    <string name="type_expense">Despesa</string>
+
+    <!--  Dashboard Fragment -->
+    <string name="dashboard_text_incomes">Rendimento</string>
+    <string name="dashboard_text_expenses">Despesa</string>
+    <string name="dashboard_text_balance_available">Saldo disponível</string>
+    <string name="dashboard_text_hint_searchbar">Pesquisar</string>
+    <string name="dashboard_recycler_transactions_header">Histórico de rendimentos e despesas</string>
+    <string name="deletion_confirmation_snackbar_message">Você deseja exlcuir essa transação?</string>
+    <string name="deletion_confirmation_snackbar_action">Excluir</string>
+
+    <!--  Select Date Dialog Fragment  -->
+    <string name="select_date_dialog_fragment_close_button">Fechar</string>
+    <string name="select_date_dialog_fragment_current_date_button">Data atual</string>
+
+
+</resources>

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.gabrielsantana.projects.controledegastos.util.CurrencyExtensionKt"/>
+        <import type="com.gabrielsantana.projects.controledegastos.util.DateExtensionKt"/>
+
+        <variable
+            name="locale"
+            type="java.util.Locale" />
+        <variable
+            name="dashboardViewModel"
+            type="com.gabrielsantana.projects.controledegastos.ui.dashboard.DashboardViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.dashboard.DashboardFragment">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_search_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="top|center_horizontal"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_close_search_bar"
+                    style="@style/Widget.App.IconButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:onClick="@{() -> dashboardViewModel.closeSearchBar()}"
+                    app:icon="@drawable/ic_round_arrow_back_24"
+                    app:layout_constraintEnd_toEndOf="@+id/textView"
+                    app:layout_constraintStart_toStartOf="@+id/textView"
+                    app:layout_constraintTop_toBottomOf="@+id/textView"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="?android:attr/listDivider" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/dashboard_text_hint_searchbar"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_panel"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardElevation="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearance="@style/ShapeAppearance.App.CardView.Landscape">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                >
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/type_expense"
+                    android:textSize="@dimen/textSizeMedium"
+                    app:layout_constraintBottom_toTopOf="@+id/textViewExpenses"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/imageView2"
+                    app:layout_constraintTop_toTopOf="@+id/imageView2"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textViewExpenses"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:gravity="center"
+                    android:text="@{CurrencyExtensionKt.toCurrency(dashboardViewModel.currentExpenses)}"
+                    app:amountValue="@{dashboardViewModel.currentExpenses}"
+                    app:amountVisibility="@{dashboardViewModel.balanceVisibility}"
+                    android:textSize="@dimen/textSizeExtraLarge1"
+                    android:textColor="@color/red_expenses"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/imageView2"
+                    app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonSelectDate"
+                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{DateExtensionKt.formatMonthAndYear(dashboardViewModel.currentDate, locale)}"
+                    android:onClick="@{() -> dashboardViewModel.showSelectDateDialog()}"
+                    app:icon="@drawable/ic_round_calendar_today_24"
+                    app:layout_constraintEnd_toEndOf="@+id/textViewCurrentBalance"
+                    app:layout_constraintStart_toStartOf="@+id/textViewCurrentBalance"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textViewCurrentBalance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:freezesText="false"
+                    app:amountVisibility="@{dashboardViewModel.balanceVisibility}"
+                    app:amountValue="@{dashboardViewModel.currentIncomes}"
+                    android:text="@{CurrencyExtensionKt.toCurrency(dashboardViewModel.currentBalance)}"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="@dimen/textSizeExtraLarge2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonSelectDate" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dashboard_text_balance_available"
+                    android:textSize="@dimen/textSizeMedium"
+                    app:layout_constraintEnd_toEndOf="@+id/textViewCurrentBalance"
+                    app:layout_constraintStart_toStartOf="@+id/textViewCurrentBalance"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewCurrentBalance" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_balance_visibility"
+                    style="@style/Widget.App.IconButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:onClick="@{() -> dashboardViewModel.updateAmountsVisibility()}"
+                    app:iconType="@{dashboardViewModel.balanceVisibility}"
+                    app:layout_constraintEnd_toEndOf="@+id/textView"
+                    app:layout_constraintStart_toStartOf="@+id/textView"
+                    app:layout_constraintTop_toBottomOf="@+id/textView"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toStartOf="@+id/textViewIncomes"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/button_balance_visibility"
+                    app:srcCompat="@drawable/ic_arrow_incomes" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/type_income"
+                    android:textSize="@dimen/textSizeMedium"
+                    app:layout_constraintBottom_toTopOf="@+id/textViewIncomes"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/imageView"
+                    app:layout_constraintTop_toTopOf="@+id/imageView"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textViewIncomes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    app:amountVisibility="@{dashboardViewModel.balanceVisibility}"
+                    app:amountValue="@{dashboardViewModel.currentIncomes}"
+                    android:text="@{CurrencyExtensionKt.toCurrency(dashboardViewModel.currentIncomes)}"
+                    android:textSize="@dimen/textSizeExtraLarge1"
+                    android:textColor="@color/green_incomes"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/imageView"
+                    app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/textViewExpenses"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView"
+                    app:srcCompat="@drawable/ic_arrow_expenses" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:fabSize="mini"
+            app:fabVisibility="@{dashboardViewModel.fabsVisibility}"
+            android:onClick="@{() -> dashboardViewModel.showSearchBar()}"
+            app:layout_constraintBottom_toTopOf="@+id/fabAdd"
+            app:layout_constraintEnd_toEndOf="@+id/fabAdd"
+            app:layout_constraintStart_toStartOf="@+id/fabAdd"
+            app:srcCompat="@drawable/ic_round_search_24"
+            tools:ignore="ContentDescription" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:fabVisibility="@{dashboardViewModel.fabsVisibility}"
+            android:onClick="@{() -> dashboardViewModel.navigateToAddTransaction()}"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_round_addchart_24"
+            tools:ignore="ContentDescription" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/transactionsRecycler"
+            style="@style/Widget.App.RecyclerView.Vertical.Scrollbar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/card_panel"
+            app:layout_constraintTop_toBottomOf="@+id/card_search_bar"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.40" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+

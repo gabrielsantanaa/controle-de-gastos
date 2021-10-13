@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.3635897435897436" />
+        <entry key="../../Android/Sdk/platforms/android-31/data/res/drawable/ic_lock_idle_alarm.xml" value="0.3646153846153846" />
+        <entry key="app/src/main/res/drawable-v24/from_right.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/drawable-v24/ic_arrow_incomes_background.xml" value="0.2740740740740741" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.325" />
+        <entry key="app/src/main/res/drawable-v24/ic_round_directions_bus_selected_24.xml" value="0.325" />
+        <entry key="app/src/main/res/drawable-v24/ic_round_food_bank_selected_24.xml" value="0.325" />
+        <entry key="app/src/main/res/drawable-v24/selector_round_food_bank.xml" value="0.325" />
+        <entry key="app/src/main/res/drawable/aaaa.xml" value="0.3646153846153846" />
+        <entry key="app/src/main/res/drawable/app_bar_background.xml" value="0.32465753424657534" />
+        <entry key="app/src/main/res/drawable/button_month.xml" value="0.325" />
+        <entry key="app/src/main/res/drawable/custom_divider.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/drawable/custom_popup_background.xml" value="0.3646153846153846" />
+        <entry key="app/src/main/res/drawable/custom_popupmenu_background.xml" value="0.3646153846153846" />
+        <entry key="app/src/main/res/drawable/custom_scrollbar.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/drawable/custom_selector.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/drawable/from_left.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/drawable/from_right.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/drawable/hide_textview_background.xml" value="0.5419847328244275" />
+        <entry key="app/src/main/res/drawable/ic_arrow_expenses.xml" value="0.2740740740740741" />
+        <entry key="app/src/main/res/drawable/ic_arrow_expenses_background.xml" value="0.2740740740740741" />
+        <entry key="app/src/main/res/drawable/ic_arrow_expenses_foreground.xml" value="0.2740740740740741" />
+        <entry key="app/src/main/res/drawable/ic_arrow_incomes.xml" value="0.2740740740740741" />
+        <entry key="app/src/main/res/drawable/ic_arrow_incomes_background.xml" value="0.2740740740740741" />
+        <entry key="app/src/main/res/drawable/ic_arrow_incomes_foreground.xml" value="0.21302083333333333" />
+        <entry key="app/src/main/res/drawable/ic_baseline_food_bank_24.xml" value="0.325" />
+        <entry key="app/src/main/res/drawable/ic_baseline_keyboard_arrow_down_24.xml" value="0.325" />
+        <entry key="app/src/main/res/drawable/ic_baseline_panorama_fish_eye_24.xml" value="0.32465753424657534" />
+        <entry key="app/src/main/res/drawable/ic_baseline_remove_red_eye_24.xml" value="0.2740740740740741" />
+        <entry key="app/src/main/res/drawable/ic_expenses_foreground.xml" value="0.2740740740740741" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2740740740740741" />
+        <entry key="app/src/main/res/drawable/ic_outline_remove_red_eye_24.xml" value="0.2740740740740741" />
+        <entry key="app/src/main/res/drawable/ic_round_add_24.xml" value="0.24444444444444444" />
+        <entry key="app/src/main/res/drawable/ic_round_addchart_24.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/drawable/ic_round_addchart_selected_24.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/drawable/ic_round_arrow_back_24.xml" value="0.3641025641025641" />
+        <entry key="app/src/main/res/drawable/ic_round_arrow_back_ios_24.xml" value="0.2490740740740741" />
+        <entry key="app/src/main/res/drawable/ic_round_arrow_forward_ios_24.xml" value="0.2490740740740741" />
+        <entry key="app/src/main/res/drawable/ic_round_calendar_today_24.xml" value="0.5419847328244275" />
+        <entry key="app/src/main/res/drawable/ic_round_closed_eye.xml" value="0.325" />
+        <entry key="app/src/main/res/drawable/ic_round_directions_bus_24.xml" value="0.33" />
+        <entry key="app/src/main/res/drawable/ic_round_directions_bus_no_start_padding24.xml" value="0.3703125" />
+        <entry key="app/src/main/res/drawable/ic_round_fastfood_24.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/drawable/ic_round_fastfood_selected24.xml" value="0.25277777777777777" />
+        <entry key="app/src/main/res/drawable/ic_round_food_bank_24.xml" value="0.325" />
+        <entry key="app/src/main/res/drawable/ic_round_keyboard_arrow_down_24.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/drawable/ic_round_menu_24.xml" value="0.32465753424657534" />
+        <entry key="app/src/main/res/drawable/ic_round_money_24.xml" value="0.32465753424657534" />
+        <entry key="app/src/main/res/drawable/ic_round_payment_24.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/drawable/ic_round_search_24.xml" value="0.32465753424657534" />
+        <entry key="app/src/main/res/drawable/ic_round_several_24.xml" value="0.32465753424657534" />
+        <entry key="app/src/main/res/drawable/ic_round_warning_24.xml" value="0.32465753424657534" />
+        <entry key="app/src/main/res/drawable/ic_round_warning_amber_24.xml" value="0.32465753424657534" />
+        <entry key="app/src/main/res/drawable/ic_search_black_24dp.xml" value="0.32465753424657534" />
+        <entry key="app/src/main/res/drawable/ic_selector_button_balance_visibility.xml" value="0.32465753424657534" />
+        <entry key="app/src/main/res/drawable/layer_bus.xml" value="0.3646153846153846" />
+        <entry key="app/src/main/res/drawable/myrect.xml" value="0.325" />
+        <entry key="app/src/main/res/drawable/round_popupmenu_background.xml" value="0.3646153846153846" />
+        <entry key="app/src/main/res/drawable/rounded_background.xml" value="0.32465753424657534" />
+        <entry key="app/src/main/res/drawable/rounded_shape.xml" value="0.325" />
+        <entry key="app/src/main/res/drawable/rounded_shape_dialog_select_date.xml" value="0.5419847328244275" />
+        <entry key="app/src/main/res/drawable/rounded_toolbar.xml" value="0.32465753424657534" />
+        <entry key="app/src/main/res/drawable/selector_round_addchart.xml" value="0.325" />
+        <entry key="app/src/main/res/drawable/selector_round_bus.xml" value="0.325" />
+        <entry key="app/src/main/res/drawable/selector_round_fastfood.xml" value="0.25277777777777777" />
+        <entry key="app/src/main/res/drawable/selector_test.xml" value="0.32465753424657534" />
+        <entry key="app/src/main/res/drawable/shape_circle_image.xml" value="0.2740740740740741" />
+        <entry key="app/src/main/res/drawable/slide_from_left.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/drawable/test.xml" value="0.3646153846153846" />
+        <entry key="app/src/main/res/drawable/teste.xml" value="0.32465753424657534" />
+        <entry key="app/src/main/res/drawable/to_left.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/drawable/to_right.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/layout-land/add_transaction_fragment.xml" value="0.2" />
+        <entry key="app/src/main/res/layout-land/dashboard_fragment.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/add_transaction_fragment.xml" value="0.28703703703703703" />
+        <entry key="app/src/main/res/layout/button_transaction_type.xml" value="0.3148148148148148" />
+        <entry key="app/src/main/res/layout/chip_button_layout.xml" value="0.3148148148148148" />
+        <entry key="app/src/main/res/layout/chip_transaction_category.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/dashboard_fragment.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/dialog_fragment_select_date.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/dialog_fragment_transaction_details.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_item_list_dialog_list_dialog.xml" value="0.3541666666666667" />
+        <entry key="app/src/main/res/layout/fragment_item_list_dialog_list_dialog_item.xml" value="0.3541666666666667" />
+        <entry key="app/src/main/res/layout/fragment_search_transaction.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/list_chip_category.xml" value="0.3148148148148148" />
+        <entry key="app/src/main/res/layout/list_item.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/list_item_menu.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/list_item_transaction.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/list_title.xml" value="0.3148148148148148" />
+        <entry key="app/src/main/res/layout/view_holder_title.xml" value="0.3148148148148148" />
+        <entry key="app/src/main/res/menu/bottom_app_bar_menu.xml" value="0.3105022831050228" />
+        <entry key="app/src/main/res/menu/month_menu.xml" value="0.3541666666666667" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_expenses.xml" value="0.2740740740740741" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_expenses_round.xml" value="0.2740740740740741" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2740740740740741" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.32465753424657534" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
