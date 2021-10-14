@@ -24,5 +24,8 @@ interface TransactionDatabaseDao {
     @Query("SELECT SUM(amount_spent) FROM transactions_table WHERE transaction_type = :transactionType and strftime('%Y %m', datetime(date_creation / 1000, 'unixepoch')) = strftime('%Y %m', datetime(:date / 1000, 'unixepoch'))")
     suspend fun getTotalAmountByTransactionTypeUseCase(transactionType: TransactionType, date: Date): Double
 
+    @Query("SELECT * FROM transactions_table WHERE title LIKE :query")
+    fun observeTransactionsByTitle(query: String): LiveData<List<Transaction>>
+
 
 }

@@ -23,11 +23,15 @@ class RoomTransactionDataSource @Inject constructor(
         dao.delete(transaction)
     }
 
-    override suspend fun getTotalAmountByTransactionTypeUseCase(transactionType: TransactionType, date: Date): Double {
+    override suspend fun getTotalAmountByTransactionType(transactionType: TransactionType, date: Date): Double {
         return try {
             dao.getTotalAmountByTransactionTypeUseCase(transactionType, date)
         } catch (e: Exception) {
             0.0
         }
+    }
+
+    override fun observeTransactionsByTitle(query: String): LiveData<List<Transaction>> {
+        return dao.observeTransactionsByTitle(query)
     }
 }

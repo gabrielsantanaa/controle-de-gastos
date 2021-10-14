@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import com.gabrielsantana.projects.controledegastos.data.datasource.TransactionDataSource
 import com.gabrielsantana.projects.controledegastos.domain.model.Transaction
 import com.gabrielsantana.projects.controledegastos.domain.model.TransactionType
-import kotlinx.coroutines.flow.Flow
 import java.util.*
 import javax.inject.Inject
 
@@ -22,6 +21,10 @@ class TransactionRepository @Inject constructor(
         dataSource.deleteTransaction(transaction)
 
     suspend fun getTotalAmountByTransactionTypeUseCase(transactionType: TransactionType, date: Date): Double =
-        dataSource.getTotalAmountByTransactionTypeUseCase(transactionType, date)
+        dataSource.getTotalAmountByTransactionType(transactionType, date)
+
+    fun observeTransactionsByTitle(query: String): LiveData<List<Transaction>> =
+        dataSource.observeTransactionsByTitle(query)
+
 
 }

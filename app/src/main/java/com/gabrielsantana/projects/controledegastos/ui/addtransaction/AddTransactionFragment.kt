@@ -2,7 +2,6 @@ package com.gabrielsantana.projects.controledegastos.ui.addtransaction
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import com.gabrielsantana.projects.controledegastos.databinding.AddTransactionFr
 import com.google.android.material.datepicker.MaterialDatePicker
 import android.view.MotionEvent
 import android.view.View.OnTouchListener
-import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.core.view.ViewCompat
 import androidx.core.view.ViewGroupCompat
@@ -26,10 +24,7 @@ import com.gabrielsantana.projects.controledegastos.util.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
-import java.time.ZoneOffset.UTC
 import java.util.*
-import java.util.Locale
 
 @AndroidEntryPoint
 class AddTransactionFragment : Fragment() {
@@ -38,7 +33,7 @@ class AddTransactionFragment : Fragment() {
     private val binding
         get() = _binding!!
 
-    private val addTransactionViewModel: AddTransactionViewModel by viewModels()
+        private val viewModel: AddTransactionViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,19 +66,16 @@ class AddTransactionFragment : Fragment() {
 
     private fun setupOnBackPressedHandler() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, true) {
-            addTransactionViewModel.onBackPressed()
+            viewModel.onBackPressed()
         }
     }
 
     private fun setupBinding() {
-        binding.apply {
-            viewModel = this@AddTransactionFragment.addTransactionViewModel
-            lifecycleOwner = this@AddTransactionFragment.viewLifecycleOwner
-        }
-        setupDescriptionField()
+        BindingAdapter(viewModel, binding)
         setupPriceFormatter()
         setupChips()
         setupToggleButtons()
+
     }
 
     private fun setupToggleButtons() {
@@ -105,13 +97,13 @@ class AddTransactionFragment : Fragment() {
     private fun setupPriceFormatter() {
         binding.textInputEditTextPrice.apply {
             addTextChangedListener(CurrencyTextWatcher(this) {
-                addTransactionViewModel.transactionAmountSpent.value = it
+                viewModel.transactionAmountSpent.value = it
             })
         }
     }
 
     private fun setupEventsObserver() {
-        addTransactionViewModel.eventChannel.observeOnLifecycle(viewLifecycleOwner) { event ->
+        viewModel.eventChannel.observeOnLifecycle(viewLifecycleOwner) { event ->
             when (event) {
                 AddTransactionViewModel.Event.NavigateToDashboardFragment -> {
                     navigateToDashboardFragment()
@@ -136,7 +128,7 @@ class AddTransactionFragment : Fragment() {
             .setTitle(R.string.closing_confirmation_dialog_title)
             .setMessage(R.string.closing_confirmation_dialog_message)
             .setPositiveButton(R.string.closing_confirmation_dialog_positive_button) { _, _ ->
-                addTransactionViewModel.navigateToDashboardFragment()
+                viewModel.navigateToDashboardFragment()
             }
             .setNegativeButton(R.string.closing_confirmation_dialog_negative_button, null)
             .show()
@@ -155,24 +147,6 @@ class AddTransactionFragment : Fragment() {
         ViewGroupCompat.setTransitionGroup(binding.rootLayout, true)
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    private fun setupDescriptionField() {
-        //fix text field scroll when it is focused
-        binding.textInputEditTextDescription.apply {
-            setOnTouchListener(OnTouchListener { v, event ->
-                if (hasFocus()) {
-                    v.parent.requestDisallowInterceptTouchEvent(true)
-                    when (event.action and MotionEvent.ACTION_MASK) {
-                        MotionEvent.ACTION_SCROLL -> {
-                            v.parent.requestDisallowInterceptTouchEvent(false)
-                            return@OnTouchListener true
-                        }
-                    }
-                }
-                false
-            })
-        }
-    }
 
     private fun navigateToDashboardFragment() =
         findNavController().popBackStack()
@@ -183,7 +157,7 @@ class AddTransactionFragment : Fragment() {
             .build()
             .apply {
                 addOnPositiveButtonClickListener {
-                    addTransactionViewModel.saveTransaction(Date(it))
+                    viewModel.saveTransaction(Date(it))
                 }
             }
             .show(activity?.supportFragmentManager!!, null)

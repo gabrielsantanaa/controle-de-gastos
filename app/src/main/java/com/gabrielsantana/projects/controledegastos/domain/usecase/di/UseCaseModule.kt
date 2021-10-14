@@ -22,4 +22,6 @@ interface UseCaseModule {
     @Binds
     fun bindGetTotalAmountByUserTransactionType(useCase: GetTotalAmountByTransactionTypeUseCaseImpl): GetTotalAmountByTransactionTypeUseCase
 
+    @Binds
+    fun bindObserveTransactionsByTitle(useCase: ObserveTransactionsByTitleUseCaseImpl): ObserveTransactionsByTitleUseCase
 }

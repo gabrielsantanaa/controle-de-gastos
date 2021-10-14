@@ -17,7 +17,7 @@ import com.gabrielsantana.projects.controledegastos.util.toCurrency
 
 class TransactionHistoryAdapter(
     private val onItemClick: (Transaction) -> Unit,
-    private val onLongItemClick: (Transaction) -> Unit
+    private val onItemLongClick: (Transaction) -> Unit
 ) : ListAdapter<Transaction, TransactionHistoryAdapter.TransactionViewHolder>(
         TransactionDiffCallback
     ) {
@@ -67,7 +67,7 @@ class TransactionHistoryAdapter(
 
     override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
         Log.d("adapter", "onBindViewHolder: $position")
-        holder.bind(getItem(position), this.onItemClick, this.onLongItemClick)
+        holder.bind(getItem(position), this.onItemClick, this.onItemLongClick)
     }
 
     private object TransactionDiffCallback : DiffUtil.ItemCallback<Transaction>() {

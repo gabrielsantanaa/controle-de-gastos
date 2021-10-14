@@ -1,22 +1,17 @@
 package com.gabrielsantana.projects.controledegastos.ui.dashboard
 
-import android.animation.Animator
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.core.os.LocaleListCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.ViewGroupCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
-import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.*
 import com.gabrielsantana.projects.controledegastos.R
 import com.gabrielsantana.projects.controledegastos.databinding.DashboardFragmentBinding
@@ -24,16 +19,14 @@ import com.gabrielsantana.projects.controledegastos.domain.model.Transaction
 import com.gabrielsantana.projects.controledegastos.ui.selectdate.SelectDateDialogFragment
 import com.gabrielsantana.projects.controledegastos.util.*
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textview.MaterialTextView
 import com.google.android.material.transition.Hold
-import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
 @AndroidEntryPoint
 class DashboardFragment : Fragment() {
 
-    private val dashboardViewModel: DashboardViewModel by viewModels()
+    private val viewModel: DashboardViewModel by viewModels()
 
     private var _binding: DashboardFragmentBinding? = null
     private val binding
@@ -42,10 +35,10 @@ class DashboardFragment : Fragment() {
     private val adapter by lazy {
         TransactionHistoryAdapter(
             onItemClick = { transaction ->
-                dashboardViewModel.showTransactionDetails(transaction)
+                viewModel.showTransactionDetails(transaction)
             },
-            onLongItemClick = { transaction ->
-                dashboardViewModel.showDeletionSnackbar(transaction)
+            onItemLongClick = { transaction ->
+                viewModel.showDeletionSnackbar(transaction)
             }
         )
     }
@@ -72,7 +65,6 @@ class DashboardFragment : Fragment() {
         setupBinding()
         setupOnBackPressedHandler()
         setupLiveDataObservers()
-        setupFabScrollingBehavior()
         setupFragmentTransition()
         setupEventsObserver()
     }
@@ -80,7 +72,7 @@ class DashboardFragment : Fragment() {
     private fun setupOnBackPressedHandler() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, true) {
             if(searchModeIsActive()) {
-                dashboardViewModel.closeSearchBar()
+                viewModel.updateSearchMode(show = false, animate = true)
             } else {
                 requireActivity().finish()
             }
@@ -88,19 +80,15 @@ class DashboardFragment : Fragment() {
     }
 
     private fun searchModeIsActive(): Boolean =
-        binding.cardSearchBar.visibility == View.VISIBLE
+        viewModel.searchMode.value!!.isActive
 
     private fun setupBinding() {
-        binding.apply {
-            dashboardViewModel = this@DashboardFragment.dashboardViewModel
-            locale = LocaleListCompat.getDefault()[0]
-            lifecycleOwner = this@DashboardFragment.viewLifecycleOwner
-        }
         setupRecyclerView()
+        BindingAdapter(viewModel, binding, viewLifecycleOwner, requireContext())
     }
 
     private fun setupEventsObserver() {
-        dashboardViewModel.eventChannel.observeOnLifecycle(viewLifecycleOwner) { event ->
+        viewModel.eventChannel.observeOnLifecycle(viewLifecycleOwner) { event ->
             when (event) {
                 is DashboardViewModel.Event.NavigateToAddTransaction -> {
                     navigateToAddTransaction()
@@ -113,12 +101,6 @@ class DashboardFragment : Fragment() {
                 }
                 is DashboardViewModel.Event.ShowSelectDateDialog -> {
                     showSelectDateDialog()
-                }
-                is DashboardViewModel.Event.CloseSearchBar -> {
-                    setSearchBarVisibility(false)
-                }
-                is DashboardViewModel.Event.ShowSearchBar -> {
-                    setSearchBarVisibility(true)
                 }
             }
         }
@@ -149,7 +131,7 @@ class DashboardFragment : Fragment() {
         )
             .setAnchorView(anchorView)
             .setAction(R.string.deletion_confirmation_snackbar_action) {
-                dashboardViewModel.deleteTransaction(transaction)
+                viewModel.deleteTransaction(transaction)
             }.show()
     }
 
@@ -172,74 +154,11 @@ class DashboardFragment : Fragment() {
         ViewGroupCompat.setTransitionGroup(binding.rootLayout, true)
     }
 
-    private fun setupFabScrollingBehavior() {
-        binding.transactionsRecycler.addOnScrollListener(object: RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                if (dy > 0) dashboardViewModel.updateFabsVisibility(false)
-                else dashboardViewModel.updateFabsVisibility(true)
-            }
-        })
-
-    }
-    private fun clearFabScrollingBehavior() {
-        binding.transactionsRecycler.clearOnScrollListeners()
-    }
-
     private fun setupLiveDataObservers() {
-        dashboardViewModel.run {
+        viewModel.run {
             transactions.observe(viewLifecycleOwner) {
                 adapter.submitList(it)
-                dashboardViewModel.fetchAmounts()
             }
-        }
-    }
-
-    private fun setSearchBarVisibility(show: Boolean) {
-        binding.run {
-            // TODO: 23/09/2021 fix scrollbar on searchMode
-
-            clearFabScrollingBehavior()
-
-            //fix fabSearch position at transformation to fab
-            if(!show) fabAdd.visibility = View.INVISIBLE
-
-            val durationLong = requireContext().themeInt(R.attr.motionDurationLong2).toLong()
-
-            fabSearch.visibility = if (show) View.GONE else View.VISIBLE
-            cardSearchBar.visibility = if (show) View.VISIBLE else View.GONE
-
-            val changeBounds = ChangeBounds().apply {
-                duration = durationLong
-            }
-            val transform = MaterialContainerTransform().apply {
-                duration = durationLong
-                startView = if (show) fabSearch else cardSearchBar
-                endView = if (show) cardSearchBar else fabSearch
-                startContainerColor = requireContext().themeColor(R.attr.colorSecondary)
-                endContainerColor = requireContext().themeColor(R.attr.colorSecondary)
-                scrimColor = Color.TRANSPARENT
-                isElevationShadowEnabled = true
-                addTarget(if (show) fabSearch else cardSearchBar)
-            }
-            circularAnimation(cardPanel, show, durationLong) {
-                TransitionManager.beginDelayedTransition(
-                    binding.rootLayout,
-                    changeBounds
-                )
-            }
-            TransitionManager.beginDelayedTransition(binding.rootLayout, TransitionSet().apply {
-                ordering = TransitionSet.ORDERING_TOGETHER
-                addTransition(changeBounds)
-                addTransition(transform)
-                addTransitionEndListener {
-                    if(show) binding.fabAdd.hide()
-                    else {
-                        binding.fabAdd.show()
-                        setupFabScrollingBehavior()
-                    }
-                }
-            })
         }
     }
 
@@ -252,6 +171,10 @@ class DashboardFragment : Fragment() {
 
     override fun onDestroyView() {
         _binding = null
+        viewModel.updateSearchMode(
+            viewModel.searchMode.value!!.isActive,
+            false
+        )
         super.onDestroyView()
     }
 

@@ -1,204 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="viewModel"
-            type="com.gabrielsantana.projects.controledegastos.ui.addtransaction.AddTransactionViewModel" />
-    </data>
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/root_layout"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_round_arrow_back_24"
+            style="@style/Widget.App.Toolbar.Primary"
+            app:titleCentered="true"
+            app:title="@string/add_transaction_toolbar_title"
+            />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            tools:context=".ui.addtransaction.AddTransactionFragment">
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:navigationIcon="@drawable/ic_round_arrow_back_24"
-                style="@style/Widget.App.Toolbar.Primary"
-                app:titleCentered="true"
-                app:title="@string/add_transaction_toolbar_title"
-                app:onNavigationIconClick="@{() -> viewModel.onBackPressed()}"
-                />
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutDescription"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="200"
+                app:layout_constraintBottom_toTopOf="@+id/toggleButtonTransactionType"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:context=".ui.addtransaction.AddTransactionFragment">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputLayoutDescription"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="200"
-                    app:layout_constraintBottom_toTopOf="@+id/toggleButtonTransactionType"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayoutTitle">
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayoutTitle">
 
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textInputEditTextDescription"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/add_transaction_text_hint_description"
-                        android:inputType="text|textMultiLine"
-                        android:maxLines="4"
-                        android:overScrollMode="always"
-                        android:scrollbarStyle="insideOverlay"
-                        android:scrollbarThumbVertical="@drawable/custom_scrollbar"
-                        android:scrollbars="vertical"
-                        app:textInputLayoutFocusedRectEnabled="false" />
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:id="@+id/toggleButtonTransactionType"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayoutDescription"
-                    app:transactionType="@={viewModel.transactionType}"
-                    app:selectionRequired="true"
-                    app:singleSelection="true">
-
-                    <com.gabrielsantana.projects.controledegastos.ui.addtransaction.CustomButton
-                        style="?attr/materialButtonOutlinedStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
-
-
-                    <com.gabrielsantana.projects.controledegastos.ui.addtransaction.CustomButton
-                        style="?attr/materialButtonOutlinedStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
-
-                </com.google.android.material.button.MaterialButtonToggleGroup>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputLayoutTitle"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="25"
-                    app:layout_constraintBottom_toTopOf="@+id/textInputLayoutDescription"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textInputEditTextTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/add_transaction_text_hint_title"
-                        android:text="@={viewModel.transactionTitle}"
-                        android:inputType="text"
-                        app:textInputLayoutFocusedRectEnabled="false" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputLayoutPrice"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/guideline2"
-                    app:layout_constraintTop_toTopOf="@+id/textInputLayoutTitle">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textInputEditTextPrice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/add_transaction_text_hint_amount"
-                        android:inputType="numberDecimal" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <HorizontalScrollView
-                    android:id="@+id/horizontalScrollView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:fillViewport="true"
-                    android:scrollbars="none"
-                    app:layout_constraintBottom_toTopOf="@+id/button_save"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/toggleButtonTransactionType">
-
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/chipGroupCategory"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:selectionRequired="true"
-                        app:singleLine="true"
-                        app:singleSelection="true"
-                        app:transactionCategory="@={viewModel.transactionCategory}">
-
-
-                    </com.google.android.material.chip.ChipGroup>
-
-                </HorizontalScrollView>
-
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_save"
-                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEditTextDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/add_transaction_button_save"
-                    android:onClick="@{() -> viewModel.showDatePicker()}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+                    android:hint="@string/add_transaction_text_hint_description"
+                    android:inputType="text|textMultiLine"
+                    android:maxLines="4"
+                    android:overScrollMode="always"
+                    android:scrollbarStyle="insideOverlay"
+                    android:scrollbarThumbVertical="@drawable/custom_scrollbar"
+                    android:scrollbars="vertical"
+                    app:textInputLayoutFocusedRectEnabled="false" />
 
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline2"
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleButtonTransactionType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayoutDescription"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.gabrielsantana.projects.controledegastos.ui.addtransaction.CustomButton
+                    style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.50" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    />
 
-        </androidx.core.widget.NestedScrollView>
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-</layout>
+                <com.gabrielsantana.projects.controledegastos.ui.addtransaction.CustomButton
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutTitle"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="25"
+                app:layout_constraintBottom_toTopOf="@+id/textInputLayoutDescription"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEditTextTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/add_transaction_text_hint_title"
+                    android:inputType="text"
+                    app:textInputLayoutFocusedRectEnabled="false" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutPrice"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toTopOf="@+id/textInputLayoutTitle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEditTextPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/add_transaction_text_hint_amount"
+                    android:inputType="numberDecimal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fillViewport="true"
+                android:scrollbars="none"
+                app:layout_constraintBottom_toTopOf="@+id/button_save"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toggleButtonTransactionType">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroupCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:selectionRequired="true"
+                    app:singleLine="true"
+                    app:singleSelection="true"
+                   >
+
+
+                </com.google.android.material.chip.ChipGroup>
+
+            </HorizontalScrollView>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_save"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/add_transaction_button_save"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.50" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

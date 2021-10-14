@@ -1,50 +1,205 @@
 package com.gabrielsantana.projects.controledegastos.ui.dashboard
 
-import android.animation.Animator
+import android.content.Context
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.util.Log
-import android.widget.Toast
+import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat
-import androidx.databinding.BindingAdapter
+import androidx.core.os.LocaleListCompat
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.ChangeBounds
+import androidx.transition.TransitionManager
+import androidx.transition.TransitionSet
 import com.gabrielsantana.projects.controledegastos.R
-import com.gabrielsantana.projects.controledegastos.util.setTextWithFadeAnimation
-import com.gabrielsantana.projects.controledegastos.util.toCurrency
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.textview.MaterialTextView
+import com.gabrielsantana.projects.controledegastos.databinding.DashboardFragmentBinding
+import com.gabrielsantana.projects.controledegastos.util.*
+import com.google.android.material.transition.MaterialContainerTransform
 
+class BindingAdapter(
+    private val viewModel: DashboardViewModel,
+    private val binding: DashboardFragmentBinding,
+    private val lifecycleOwner: LifecycleOwner,
+    private val context: Context
+) {
 
-@BindingAdapter("app:iconType")
-fun setIconType(view: MaterialButton,value: Boolean) {
-    view.icon = if (value) {
-        ContextCompat.getDrawable(view.context, R.drawable.ic_outline_open_eye_24)
-    } else {
-        ContextCompat.getDrawable(view.context, R.drawable.ic_round_closed_eye)
+    init {
+        setOnClickListeners()
+        setLiveDataObservers()
     }
-}
 
-@BindingAdapter("app:fabVisibility")
-fun setFabVisibility(view: FloatingActionButton,value: Boolean) {
-    if (value) {
-        view.show()
-    } else {
-       view.hide()
+    private fun setOnClickListeners() = binding.apply {
+        fabAdd.setOnClickListener {
+            viewModel.navigateToAddTransaction()
+        }
+        fabSearch.setOnClickListener {
+            viewModel.updateSearchMode(show = true, animate = true)
+        }
+        buttonSelectDate.setOnClickListener {
+            viewModel.showSelectDateDialog()
+        }
+        buttonCloseSearchBar.setOnClickListener {
+            it.hideKeyboard()
+            viewModel.updateSearchMode(show = false, animate = true)
+        }
+        editTextSearchBar.setOnEditorActionListener { textView, action, _ ->
+            if (action == EditorInfo.IME_ACTION_SEARCH) {
+                viewModel.filterTransactionsByTitle(editTextSearchBar.text.toString())
+                textView.hideKeyboard()
+                return@setOnEditorActionListener true
+            }
+            false
+        }
+        buttonBalanceVisibility.setOnClickListener {
+            viewModel.updateAmountsVisibility()
+        }
+
     }
-}
 
-/////////////////////////////////
 
-@BindingAdapter(value = ["app:amountVisibility", "app:amountValue"], requireAll = true)
-fun MaterialTextView.setAmountVisibility(visible: Boolean, amount: Double) {
-    Log.d("amountVisibility", "setAmountVisibility: ")
-    if(visible) {
-        setTextWithFadeAnimation(amount.toCurrency())
-    } else {
-        setTextWithFadeAnimation("*********")
+    private fun setLiveDataObservers() = viewModel.apply {
+        currentBalance.observe(lifecycleOwner) {
+            binding.textViewBalance.text = it.toCurrency()
+        }
+        currentExpenses.observe(lifecycleOwner) {
+            binding.textViewExpenses.text = it.toCurrency()
+        }
+        currentIncomes.observe(lifecycleOwner) {
+            binding.textViewIncomes.text = it.toCurrency()
+        }
+        filter.observe(lifecycleOwner) {
+            binding.buttonSelectDate.text =
+                it.date.formatMonthAndYear(LocaleListCompat.getDefault()[0])
+        }
+        searchMode.observe(lifecycleOwner) { searchMode ->
+            if (searchMode.animate) {
+                setSearchBarVisibility(searchMode.isActive)
+            } else {
+                setSearchBarVisibilityNoAnim(searchMode.isActive)
+            }
+        }
+        amountsVisibility.observe(lifecycleOwner) {
+            binding.apply {
+                if (it) {
+                    showAmounts()
+                    buttonBalanceVisibility.icon = ContextCompat.getDrawable(
+                        buttonBalanceVisibility.context,
+                        R.drawable.ic_outline_open_eye_24
+                    )
+                } else {
+                    buttonBalanceVisibility.icon = ContextCompat.getDrawable(
+                        buttonBalanceVisibility.context,
+                        R.drawable.ic_round_closed_eye
+                    )
+                    hideAmounts()
+                }
+
+            }
+        }
+        fabsVisibility.observe(lifecycleOwner) {
+            if (it) {
+                showFabs()
+            } else {
+                hideFabs()
+            }
+        }
     }
-}
 
+    private fun hideFabs() {
+        binding.fabSearch.hide()
+        binding.fabAdd.hide()
+    }
+
+    private fun showFabs() {
+        binding.fabSearch.show()
+        binding.fabAdd.show()
+    }
+
+
+    private fun showAmounts() = binding.apply {
+        textViewIncomes.text = viewModel.currentIncomes.value!!.toCurrency()
+        textViewBalance.text = viewModel.currentIncomes.value!!.toCurrency()
+        textViewExpenses.text = viewModel.currentExpenses.value!!.toCurrency()
+    }
+
+
+    private fun hideAmounts() = binding.apply {
+        textViewIncomes.text = "*".repeat(viewModel.currentIncomes.value!!.toString().length)
+        textViewBalance.text = "*".repeat(viewModel.currentBalance.value!!.toString().length)
+        textViewExpenses.text = "*".repeat(viewModel.currentExpenses.value!!.toString().length)
+    }
+
+
+    private fun setSearchBarVisibility(show: Boolean) = binding.apply {
+        // TODO: 23/09/2021 fix scrollbar on searchMode
+
+        clearFabScrollingBehavior()
+
+        //fix fabSearch position at transformation to fab
+        if (!show) fabAdd.visibility = View.INVISIBLE
+
+        val durationLong = context.themeInt(R.attr.motionDurationLong2).toLong()
+
+        fabSearch.visibility = if (show) View.GONE else View.VISIBLE
+        cardSearchBar.visibility = if (show) View.VISIBLE else View.GONE
+
+        val changeBounds = ChangeBounds().apply {
+            duration = durationLong
+        }
+        val transform = MaterialContainerTransform().apply {
+            duration = durationLong
+            startView = if (show) fabSearch else cardSearchBar
+            endView = if (show) cardSearchBar else fabSearch
+            startContainerColor = context.themeColor(R.attr.colorSecondary)
+            endContainerColor = context.themeColor(R.attr.colorSecondary)
+            scrimColor = Color.TRANSPARENT
+            isElevationShadowEnabled = true
+            addTarget(if (show) fabSearch else cardSearchBar)
+        }
+        circularAnimation(cardPanel, show, durationLong) {
+            TransitionManager.beginDelayedTransition(
+                binding.rootLayout,
+                changeBounds
+            )
+        }
+        TransitionManager.beginDelayedTransition(binding.rootLayout, TransitionSet().apply {
+            ordering = TransitionSet.ORDERING_TOGETHER
+            addTransition(changeBounds)
+            addTransition(transform)
+            addTransitionEndListener {
+                if (show) binding.fabAdd.hide()
+                else {
+                    binding.fabAdd.show()
+                    setupFabScrollingBehavior()
+                }
+            }
+        })
+    }
+
+
+    private fun setSearchBarVisibilityNoAnim(show: Boolean) = binding.apply {
+        if (show) {
+            hideFabs()
+            cardSearchBar.visibility = View.VISIBLE
+            cardPanel.visibility = View.GONE
+        } else {
+            showFabs()
+            cardSearchBar.visibility = View.GONE
+            cardPanel.visibility = View.VISIBLE
+        }
+    }
+
+    private fun clearFabScrollingBehavior() = binding.transactionsRecycler.clearOnScrollListeners()
+
+    private fun setupFabScrollingBehavior() =
+        binding.transactionsRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0) viewModel.updateFabsVisibility(false)
+                else viewModel.updateFabsVisibility(true)
+            }
+        })
+
+}
 
 

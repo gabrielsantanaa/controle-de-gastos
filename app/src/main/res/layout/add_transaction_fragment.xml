@@ -1,174 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.coordinatorlayout.widget.CoordinatorLayout android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable
-            name="viewModel"
-            type="com.gabrielsantana.projects.controledegastos.ui.addtransaction.AddTransactionViewModel" />
-    </data>
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/root_layout"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar_layout"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_round_arrow_back_24"
+            style="@style/Widget.App.Toolbar.Primary"
+            app:titleCentered="true"
+            app:title="@string/add_transaction_toolbar_title"
+             />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:padding="16dp">
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:navigationIcon="@drawable/ic_round_arrow_back_24"
-                style="@style/Widget.App.Toolbar.Primary"
-                app:onNavigationIconClick="@{() -> viewModel.onBackPressed()}"
-                app:titleCentered="true"
-                app:title="@string/add_transaction_toolbar_title"
-                 />
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:fillViewport="true">
-
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center_vertical"
-                android:padding="16dp">
+                app:counterEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:counterMaxLength="25">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputLayoutTitle"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEditTextTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:counterEnabled="true"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:counterMaxLength="25">
+                    android:hint="@string/add_transaction_text_hint_title"
+                    android:inputType="text"
+                    app:textInputLayoutFocusedRectEnabled="false" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textInputEditTextTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/add_transaction_text_hint_title"
-                        android:inputType="text"
-                        android:text="@={viewModel.transactionTitle}"
-                        app:textInputLayoutFocusedRectEnabled="false" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:counterEnabled="true"
+                app:counterMaxLength="200">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputLayoutDescription"
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEditTextDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="200">
+                    android:hint="@string/add_transaction_text_hint_description"
+                    android:inputType="text|textMultiLine"
+                    android:maxLines="4"
+                    android:overScrollMode="always"
+                    android:scrollbarStyle="insideOverlay"
+                    android:scrollbarThumbVertical="@drawable/custom_scrollbar"
+                    android:scrollbars="vertical"
+                    app:textInputLayoutFocusedRectEnabled="false" />
+            </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutPrice"
+                android:layout_width="match_parent"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_height="wrap_content">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textInputEditTextDescription"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/add_transaction_text_hint_description"
-                        android:inputType="text|textMultiLine"
-                        android:maxLines="4"
-                        android:text="@={viewModel.transactionDescription}"
-                        android:overScrollMode="always"
-                        android:scrollbarStyle="insideOverlay"
-                        android:scrollbarThumbVertical="@drawable/custom_scrollbar"
-                        android:scrollbars="vertical"
-                        app:textInputLayoutFocusedRectEnabled="false" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputLayoutPrice"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEditTextPrice"
                     android:layout_width="match_parent"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:hint="@string/add_transaction_text_hint_amount"
+                    android:inputType="numberDecimal" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textInputEditTextPrice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/add_transaction_text_hint_amount"
-                        android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleButtonTransactionType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:selectionRequired="true"
+                app:singleSelection="true">
 
-                <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:id="@+id/toggleButtonTransactionType"
+                <com.gabrielsantana.projects.controledegastos.ui.addtransaction.CustomButton
+                    style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    />
+
+
+                <com.gabrielsantana.projects.controledegastos.ui.addtransaction.CustomButton
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fillViewport="true"
+                android:scrollbars="none"
+                app:layout_constraintBottom_toTopOf="@+id/button_save"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toggleButtonTransactionType">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroupCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:singleLine="true"
+                    app:singleSelection="true"
                     app:selectionRequired="true"
-                    app:transactionType="@={viewModel.transactionType}"
-                    app:singleSelection="true">
+                    >
 
-                    <com.gabrielsantana.projects.controledegastos.ui.addtransaction.CustomButton
-                        style="?attr/materialButtonOutlinedStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/add_transaction_button_save"
+                 />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-                    <com.gabrielsantana.projects.controledegastos.ui.addtransaction.CustomButton
-                        style="?attr/materialButtonOutlinedStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-                        />
-
-
-                </com.google.android.material.button.MaterialButtonToggleGroup>
-
-                <HorizontalScrollView
-                    android:id="@+id/horizontalScrollView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:fillViewport="true"
-                    android:scrollbars="none"
-                    app:layout_constraintBottom_toTopOf="@+id/button_save"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/toggleButtonTransactionType">
-
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/chipGroupCategory"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:singleLine="true"
-                        app:singleSelection="true"
-                        app:selectionRequired="true"
-                        app:transactionCategory="@={viewModel.transactionCategory}"
-                        >
-
-                    </com.google.android.material.chip.ChipGroup>
-                </HorizontalScrollView>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_save"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/add_transaction_button_save"
-                    android:onClick="@{() -> viewModel.showDatePicker()}"
-                     />
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-</layout>
 
 
 

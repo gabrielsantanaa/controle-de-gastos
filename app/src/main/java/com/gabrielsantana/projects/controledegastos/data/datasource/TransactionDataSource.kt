@@ -14,6 +14,8 @@ interface TransactionDataSource {
 
     suspend fun deleteTransaction(transaction: Transaction)
 
-    suspend fun getTotalAmountByTransactionTypeUseCase(transactionType: TransactionType, date: Date): Double
+    suspend fun getTotalAmountByTransactionType(transactionType: TransactionType, date: Date): Double
+
+    fun observeTransactionsByTitle(query: String): LiveData<List<Transaction>>
 
 }

@@ -14,9 +14,7 @@ import com.gabrielsantana.projects.controledegastos.R
 import com.gabrielsantana.projects.controledegastos.databinding.DialogFragmentSelectDateBinding
 import com.gabrielsantana.projects.controledegastos.databinding.ListItemMenuBinding
 import com.gabrielsantana.projects.controledegastos.ui.dashboard.DashboardViewModel
-import com.gabrielsantana.projects.controledegastos.util.decreaseYear
 import com.gabrielsantana.projects.controledegastos.util.formatYear
-import com.gabrielsantana.projects.controledegastos.util.increaseYear
 import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
 import java.util.*
@@ -32,7 +30,7 @@ class SelectDateDialogFragment : DialogFragment() {
 
             val formatter = SimpleDateFormat("MMM-yyyy", LocaleListCompat.getDefault()[0])
             val dateInString = month + "-" + binding.textViewCurrentYear.text.toString().toInt()
-            viewModel.updateCurrentDate(formatter.parse(dateInString)!!)
+            viewModel.updateDate(formatter.parse(dateInString)!!)
             dismiss()
         }.apply {
             val dateFormatSymbols = DateFormatSymbols.getInstance()
@@ -75,27 +73,23 @@ class SelectDateDialogFragment : DialogFragment() {
     private fun setupUiListeners() {
         binding.apply {
             buttonPreviousMonth.setOnClickListener {
-                viewModel.updateCurrentDate(
-                    viewModel.currentDate.value!!.decreaseYear()
-                )
+                viewModel.decreaseYearFromDate()
 
             }
             buttonNextMonth.setOnClickListener {
-                viewModel.updateCurrentDate(
-                    viewModel.currentDate.value!!.increaseYear()
-                )
+                viewModel.increaseYearFromDate()
             }
             buttonClose.setOnClickListener { dismiss() }
             buttonCurrentDate.setOnClickListener {
-                viewModel.updateCurrentDate(Date())
+                viewModel.updateDate(Date())
                 dismiss()
             }
         }
     }
 
     private fun setupLiveDataObservers() {
-        viewModel.currentDate.observe(viewLifecycleOwner) { date ->
-            binding.textViewCurrentYear.text = date.formatYear(LocaleListCompat.getDefault()[0])
+        viewModel.filter.observe(viewLifecycleOwner) { filter ->
+            binding.textViewCurrentYear.text = filter.date.formatYear(LocaleListCompat.getDefault()[0])
         }
     }
 
