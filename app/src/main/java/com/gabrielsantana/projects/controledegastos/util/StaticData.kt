@@ -1,99 +1,770 @@
 package com.gabrielsantana.projects.controledegastos.util
 
-import com.gabrielsantana.projects.controledegastos.domain.model.TransactionCategory
 import com.gabrielsantana.projects.controledegastos.domain.model.Transaction
+import com.gabrielsantana.projects.controledegastos.domain.model.TransactionCategory
 import com.gabrielsantana.projects.controledegastos.domain.model.TransactionType
 import java.util.*
 
-const val DESCRIPTION = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."
+const val DESCRIPTION =
+    "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."
 
 val staticListTransaction = mutableListOf(
-    Transaction(0, "lkkfgg", TransactionCategory.FOOD, DESCRIPTION, Date(),12.0, TransactionType.EXPENSE),
-    Transaction(0, "fgfd", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 545.5, TransactionType.INCOME),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 1000.0, TransactionType.EXPENSE),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.FOOD, DESCRIPTION, Date(),4332.0, TransactionType.EXPENSE),
-    Transaction(0, "hfgjnç", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 12.0, TransactionType.INCOME),
-    Transaction(0, "klklty", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 12.0, TransactionType.EXPENSE),
-    Transaction(0, "lkkfgg", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 3412.0, TransactionType.INCOME),
-    Transaction(0, "dfgdf", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 12.0, TransactionType.EXPENSE),
-    Transaction(0, "lkkfgg", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 12.0, TransactionType.INCOME),
-    Transaction(0, "lkkfgg", TransactionCategory.FOOD, DESCRIPTION, Date(),12.0, TransactionType.EXPENSE),
-    Transaction(0, "fgfd", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 545.5, TransactionType.INCOME),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 1000.0, TransactionType.EXPENSE),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.FOOD, DESCRIPTION, Date(),4332.0, TransactionType.EXPENSE),
-    Transaction(0, "lkkfgg", TransactionCategory.FOOD, DESCRIPTION, Date(),12.0, TransactionType.EXPENSE),
-    Transaction(0, "fgfd", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 545.5, TransactionType.INCOME),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 1000.0, TransactionType.EXPENSE),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.FOOD, DESCRIPTION, Date(),4332.0, TransactionType.EXPENSE),
-    Transaction(0, "hfgjnç", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 12.0, TransactionType.INCOME),
-    Transaction(0, "klklty", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 12.0, TransactionType.EXPENSE),
-    Transaction(0, "lkkfgg", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 3412.0, TransactionType.INCOME),
-    Transaction(0, "dfgdf", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 12.0, TransactionType.EXPENSE),
-    Transaction(0, "lkkfgg", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 12.0, TransactionType.INCOME),
-    Transaction(0, "lkkfgg", TransactionCategory.FOOD, DESCRIPTION, Date(),12.0, TransactionType.EXPENSE),
-    Transaction(0, "fgfd", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 545.5, TransactionType.INCOME),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 1000.0, TransactionType.EXPENSE),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.FOOD, DESCRIPTION, Date(),4332.0, TransactionType.EXPENSE),
-    Transaction(0, "lkkfgg", TransactionCategory.FOOD, DESCRIPTION, Date(),12.0, TransactionType.EXPENSE),
-    Transaction(0, "fgfd", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 545.5, TransactionType.INCOME),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 1000.0, TransactionType.EXPENSE),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.FOOD, DESCRIPTION, Date(),4332.0, TransactionType.EXPENSE),
-    Transaction(0, "hfgjnç", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 12.0, TransactionType.INCOME),
-    Transaction(0, "klklty", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 12.0, TransactionType.EXPENSE),
-    Transaction(0, "lkkfgg", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 3412.0, TransactionType.INCOME),
-    Transaction(0, "dfgdf", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 12.0, TransactionType.EXPENSE),
-    Transaction(0, "lkkfgg", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 12.0, TransactionType.INCOME),
-    Transaction(0, "lkkfgg", TransactionCategory.FOOD, DESCRIPTION, Date(),12.0, TransactionType.EXPENSE),
-    Transaction(0, "fgfd", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 545.5, TransactionType.INCOME),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 1000.0, TransactionType.EXPENSE),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.FOOD, DESCRIPTION, Date(),4332.0, TransactionType.EXPENSE),
-    Transaction(0, "lkkfgg", TransactionCategory.FOOD, DESCRIPTION, Date(),12.0, TransactionType.EXPENSE),
-    Transaction(0, "fgfd", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 545.5, TransactionType.INCOME),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 1000.0, TransactionType.EXPENSE),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.FOOD, DESCRIPTION, Date(),4332.0, TransactionType.EXPENSE),
-    Transaction(0, "hfgjnç", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 12.0, TransactionType.INCOME),
-    Transaction(0, "klklty", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 12.0, TransactionType.EXPENSE),
-    Transaction(0, "lkkfgg", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 3412.0, TransactionType.INCOME),
-    Transaction(0, "dfgdf", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 12.0, TransactionType.EXPENSE),
-    Transaction(0, "lkkfgg", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 12.0, TransactionType.INCOME),
-    Transaction(0, "lkkfgg", TransactionCategory.FOOD, DESCRIPTION, Date(),12.0, TransactionType.EXPENSE),
-    Transaction(0, "fgfd", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 545.5, TransactionType.INCOME),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 1000.0, TransactionType.EXPENSE),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.FOOD, DESCRIPTION, Date(),4332.0, TransactionType.EXPENSE),
-    Transaction(0, "lkkfgg", TransactionCategory.FOOD, DESCRIPTION, Date(),12.0, TransactionType.EXPENSE),
-    Transaction(0, "fgfd", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 545.5, TransactionType.INCOME),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 1000.0, TransactionType.EXPENSE),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.FOOD, DESCRIPTION, Date(),4332.0, TransactionType.EXPENSE),
-    Transaction(0, "hfgjnç", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 12.0, TransactionType.INCOME),
-    Transaction(0, "klklty", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 12.0, TransactionType.EXPENSE),
-    Transaction(0, "lkkfgg", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 3412.0, TransactionType.INCOME),
-    Transaction(0, "dfgdf", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 12.0, TransactionType.EXPENSE),
-    Transaction(0, "lkkfgg", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 12.0, TransactionType.INCOME),
-    Transaction(0, "lkkfgg", TransactionCategory.FOOD, DESCRIPTION, Date(),12.0, TransactionType.EXPENSE),
-    Transaction(0, "fgfd", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 545.5, TransactionType.INCOME),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 1000.0, TransactionType.EXPENSE),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.FOOD, DESCRIPTION, Date(),4332.0, TransactionType.EXPENSE),
-    Transaction(0, "lkkfgg", TransactionCategory.FOOD, DESCRIPTION, Date(),12.0, TransactionType.EXPENSE),
-    Transaction(0, "fgfd", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 545.5, TransactionType.INCOME),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 1000.0, TransactionType.EXPENSE),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.FOOD, DESCRIPTION, Date(),4332.0, TransactionType.EXPENSE),
-    Transaction(0, "hfgjnç", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 12.0, TransactionType.INCOME),
-    Transaction(0, "klklty", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 12.0, TransactionType.EXPENSE),
-    Transaction(0, "lkkfgg", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 3412.0, TransactionType.INCOME),
-    Transaction(0, "dfgdf", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 12.0, TransactionType.EXPENSE),
-    Transaction(0, "lkkfgg", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 12.0, TransactionType.INCOME),
-    Transaction(0, "lkkfgg", TransactionCategory.FOOD, DESCRIPTION, Date(),12.0, TransactionType.EXPENSE),
-    Transaction(0, "fgfd", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 545.5, TransactionType.INCOME),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 1000.0, TransactionType.EXPENSE),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.FOOD, DESCRIPTION, Date(),4332.0, TransactionType.EXPENSE),
-    Transaction(0, "lkkfgg", TransactionCategory.FOOD, DESCRIPTION, Date(),12.0, TransactionType.EXPENSE),
-    Transaction(0, "fgfd", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 545.5, TransactionType.INCOME),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 1000.0, TransactionType.EXPENSE),
-    Transaction(0, "dgfdgdfgfd", TransactionCategory.FOOD, DESCRIPTION, Date(),4332.0, TransactionType.EXPENSE),
-    Transaction(0, "hfgjnç", TransactionCategory.TRANSPORT, DESCRIPTION, Date(), 12.0, TransactionType.INCOME),
-    Transaction(0, "klklty", TransactionCategory.FASTFOOD, DESCRIPTION, Date(), 12.0, TransactionType.EXPENSE),
-
-
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "fgfd",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        545.5,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        1000.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        4332.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "hfgjnç",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "klklty",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        3412.0,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "dfgdf",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "fgfd",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        545.5,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        1000.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        4332.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "fgfd",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        545.5,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        1000.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        4332.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "hfgjnç",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "klklty",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        3412.0,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "dfgdf",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "fgfd",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        545.5,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        1000.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        4332.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "fgfd",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        545.5,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        1000.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        4332.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "hfgjnç",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "klklty",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        3412.0,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "dfgdf",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "fgfd",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        545.5,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        1000.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        4332.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "fgfd",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        545.5,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        1000.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        4332.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "hfgjnç",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "klklty",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        3412.0,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "dfgdf",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "fgfd",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        545.5,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        1000.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        4332.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "fgfd",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        545.5,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        1000.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        4332.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "hfgjnç",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "klklty",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        3412.0,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "dfgdf",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "fgfd",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        545.5,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        1000.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        4332.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "fgfd",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        545.5,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        1000.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        4332.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "hfgjnç",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "klklty",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        3412.0,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "dfgdf",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "fgfd",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        545.5,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        1000.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        4332.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "lkkfgg",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "fgfd",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        545.5,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        1000.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "dgfdgdfgfd",
+        TransactionCategory.FOOD,
+        DESCRIPTION,
+        Date(),
+        4332.0,
+        TransactionType.EXPENSE
+    ),
+    Transaction(
+        0,
+        "hfgjnç",
+        TransactionCategory.TRANSPORT,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.INCOME
+    ),
+    Transaction(
+        0,
+        "klklty",
+        TransactionCategory.FASTFOOD,
+        DESCRIPTION,
+        Date(),
+        12.0,
+        TransactionType.EXPENSE
+    ),
 
 
     )

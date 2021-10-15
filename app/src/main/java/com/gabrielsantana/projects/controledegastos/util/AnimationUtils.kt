@@ -36,7 +36,7 @@ fun circularAnimation(
     anim.addListener(object : AnimatorListenerAdapter() {
         override fun onAnimationEnd(animation: Animator) {
             super.onAnimationEnd(animation)
-            view.visibility = if(isHide) View.GONE else View.VISIBLE
+            view.visibility = if (isHide) View.GONE else View.VISIBLE
             onAnimationEnd()
         }
     })

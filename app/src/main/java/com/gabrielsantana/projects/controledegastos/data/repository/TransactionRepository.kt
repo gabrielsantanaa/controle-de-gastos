@@ -20,7 +20,10 @@ class TransactionRepository @Inject constructor(
     suspend fun deleteTransaction(transaction: Transaction) =
         dataSource.deleteTransaction(transaction)
 
-    suspend fun getTotalAmountByTransactionTypeUseCase(transactionType: TransactionType, date: Date): Double =
+    suspend fun getTotalAmountByTransactionTypeUseCase(
+        transactionType: TransactionType,
+        date: Date
+    ): Double =
         dataSource.getTotalAmountByTransactionType(transactionType, date)
 
     fun observeTransactionsByTitle(query: String): LiveData<List<Transaction>> =

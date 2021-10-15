@@ -11,7 +11,7 @@ interface ObserveTransactionsByTitleUseCase {
 
 class ObserveTransactionsByTitleUseCaseImpl @Inject constructor(
     private val repository: TransactionRepository
-): ObserveTransactionsByTitleUseCase {
+) : ObserveTransactionsByTitleUseCase {
     override fun invoke(query: String): LiveData<List<Transaction>> {
         return repository.observeTransactionsByTitle(query)
     }

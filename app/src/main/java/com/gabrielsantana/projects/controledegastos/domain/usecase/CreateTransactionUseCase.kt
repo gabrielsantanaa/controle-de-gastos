@@ -1,8 +1,8 @@
 package com.gabrielsantana.projects.controledegastos.domain.usecase
 
 import com.gabrielsantana.projects.controledegastos.data.repository.TransactionRepository
-import com.gabrielsantana.projects.controledegastos.domain.model.TransactionCategory
 import com.gabrielsantana.projects.controledegastos.domain.model.Transaction
+import com.gabrielsantana.projects.controledegastos.domain.model.TransactionCategory
 import com.gabrielsantana.projects.controledegastos.domain.model.TransactionType
 import java.util.*
 import javax.inject.Inject
@@ -20,7 +20,7 @@ interface CreateTransactionUseCase {
 
 class CreateTransactionUseCaseImpl @Inject constructor(
     private val repository: TransactionRepository
-): CreateTransactionUseCase {
+) : CreateTransactionUseCase {
     override suspend fun invoke(
         title: String,
         description: String,

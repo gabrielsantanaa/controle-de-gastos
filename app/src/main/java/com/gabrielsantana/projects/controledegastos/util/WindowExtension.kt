@@ -9,7 +9,7 @@ import androidx.annotation.AttrRes
 fun Window.setStatusBarColorSmoothly(@AttrRes color: Int) {
 
     val colorFrom = statusBarColor
-    val colorTo =  context.themeColor(color)
+    val colorTo = context.themeColor(color)
     val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo)
     colorAnimation.duration = 450 // milliseconds
 

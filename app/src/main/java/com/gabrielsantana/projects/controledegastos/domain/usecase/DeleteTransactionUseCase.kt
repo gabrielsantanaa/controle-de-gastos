@@ -10,7 +10,7 @@ interface DeleteTransactionUseCase {
 
 class DeleteTransactionUseCaseImpl @Inject constructor(
     private val repository: TransactionRepository
-): DeleteTransactionUseCase {
+) : DeleteTransactionUseCase {
 
     override suspend fun invoke(transaction: Transaction) {
         repository.deleteTransaction(transaction)

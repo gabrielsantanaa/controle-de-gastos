@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class RoomTransactionDataSource @Inject constructor(
     private val dao: TransactionDatabaseDao
-): TransactionDataSource {
+) : TransactionDataSource {
 
     override suspend fun createTransaction(transaction: Transaction) {
         dao.insert(transaction)
@@ -23,7 +23,10 @@ class RoomTransactionDataSource @Inject constructor(
         dao.delete(transaction)
     }
 
-    override suspend fun getTotalAmountByTransactionType(transactionType: TransactionType, date: Date): Double {
+    override suspend fun getTotalAmountByTransactionType(
+        transactionType: TransactionType,
+        date: Date
+    ): Double {
         return try {
             dao.getTotalAmountByTransactionTypeUseCase(transactionType, date)
         } catch (e: Exception) {

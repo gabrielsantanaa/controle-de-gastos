@@ -2,6 +2,7 @@ package com.gabrielsantana.projects.controledegastos.ui.dashboard
 
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat
@@ -26,6 +27,7 @@ class BindingAdapter(
     init {
         setOnClickListeners()
         setLiveDataObservers()
+        setupFabScrollingBehavior()
     }
 
     private fun setOnClickListeners() = binding.apply {
@@ -118,7 +120,7 @@ class BindingAdapter(
 
     private fun showAmounts() = binding.apply {
         textViewIncomes.text = viewModel.currentIncomes.value!!.toCurrency()
-        textViewBalance.text = viewModel.currentIncomes.value!!.toCurrency()
+        textViewBalance.text = viewModel.currentBalance.value!!.toCurrency()
         textViewExpenses.text = viewModel.currentExpenses.value!!.toCurrency()
     }
 

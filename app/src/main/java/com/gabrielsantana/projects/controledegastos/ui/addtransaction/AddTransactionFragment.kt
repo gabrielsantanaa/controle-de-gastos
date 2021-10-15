@@ -1,28 +1,28 @@
 package com.gabrielsantana.projects.controledegastos.ui.addtransaction
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.gabrielsantana.projects.controledegastos.databinding.AddTransactionFragmentBinding
-import com.google.android.material.datepicker.MaterialDatePicker
-import android.view.MotionEvent
-import android.view.View.OnTouchListener
 import androidx.activity.addCallback
 import androidx.core.view.ViewCompat
 import androidx.core.view.ViewGroupCompat
 import androidx.core.view.children
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.google.android.material.transition.MaterialContainerTransform
+import androidx.navigation.fragment.findNavController
 import com.gabrielsantana.projects.controledegastos.R
+import com.gabrielsantana.projects.controledegastos.databinding.AddTransactionFragmentBinding
 import com.gabrielsantana.projects.controledegastos.domain.model.TransactionCategory
 import com.gabrielsantana.projects.controledegastos.domain.model.TransactionType
-import com.gabrielsantana.projects.controledegastos.util.*
+import com.gabrielsantana.projects.controledegastos.util.observeOnLifecycle
+import com.gabrielsantana.projects.controledegastos.util.setStatusBarColorSmoothly
+import com.gabrielsantana.projects.controledegastos.util.themeColor
+import com.gabrielsantana.projects.controledegastos.util.themeInt
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -33,7 +33,7 @@ class AddTransactionFragment : Fragment() {
     private val binding
         get() = _binding!!
 
-        private val viewModel: AddTransactionViewModel by viewModels()
+    private val viewModel: AddTransactionViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +45,7 @@ class AddTransactionFragment : Fragment() {
         }
 
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -64,6 +65,7 @@ class AddTransactionFragment : Fragment() {
         setupEventsObserver()
     }
 
+
     private fun setupOnBackPressedHandler() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, true) {
             viewModel.onBackPressed()
@@ -72,7 +74,6 @@ class AddTransactionFragment : Fragment() {
 
     private fun setupBinding() {
         BindingAdapter(viewModel, binding)
-        setupPriceFormatter()
         setupChips()
         setupToggleButtons()
 
@@ -87,18 +88,14 @@ class AddTransactionFragment : Fragment() {
     private fun setupChips() {
         binding.chipGroupCategory.apply {
             TransactionCategory.values().forEach { category ->
-                val chip = layoutInflater.inflate(R.layout.chip_transaction_category, this, false) as CustomChip
+                val chip = layoutInflater.inflate(
+                    R.layout.chip_transaction_category,
+                    this,
+                    false
+                ) as CustomChip
                 chip.setTransactionCategory(category)
                 addView(chip)
             }
-        }
-    }
-
-    private fun setupPriceFormatter() {
-        binding.textInputEditTextPrice.apply {
-            addTextChangedListener(CurrencyTextWatcher(this) {
-                viewModel.transactionAmountSpent.value = it
-            })
         }
     }
 
@@ -119,7 +116,6 @@ class AddTransactionFragment : Fragment() {
                 }
 
             }
-
         }
     }
 
@@ -135,7 +131,11 @@ class AddTransactionFragment : Fragment() {
     }
 
     private fun showMissingFieldsWarning() {
-        Snackbar.make(binding.rootLayout, R.string.incomplete_fields_snackbar_message, Snackbar.LENGTH_SHORT)
+        Snackbar.make(
+            binding.rootLayout,
+            R.string.incomplete_fields_snackbar_message,
+            Snackbar.LENGTH_SHORT
+        )
             .show()
     }
 
@@ -161,6 +161,7 @@ class AddTransactionFragment : Fragment() {
                 }
             }
             .show(activity?.supportFragmentManager!!, null)
+
 
     override fun onDestroyView() {
         _binding = null

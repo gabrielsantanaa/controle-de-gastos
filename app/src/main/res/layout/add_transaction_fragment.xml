@@ -79,13 +79,13 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutPrice"
+                android:id="@+id/textInputLayoutAmountSpent"
                 android:layout_width="match_parent"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textInputEditTextPrice"
+                    android:id="@+id/textInputEditTextAmountSpent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/add_transaction_text_hint_amount"
@@ -102,6 +102,7 @@
                 app:singleSelection="true">
 
                 <com.gabrielsantana.projects.controledegastos.ui.addtransaction.CustomButton
+                    android:id="@+id/buttonIncome"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -109,6 +110,7 @@
 
 
                 <com.gabrielsantana.projects.controledegastos.ui.addtransaction.CustomButton
+                    android:id="@+id/buttonExpense"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -4,7 +4,11 @@ import android.app.Activity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 
-fun View.fadOutAnimation(duration: Long = 300, visibility: Int = View.INVISIBLE, completion: () -> Unit) {
+fun View.fadOutAnimation(
+    duration: Long = 300,
+    visibility: Int = View.INVISIBLE,
+    completion: () -> Unit
+) {
     animate()
         .alpha(0f)
         .setDuration(duration)

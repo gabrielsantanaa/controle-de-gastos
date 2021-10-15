@@ -11,7 +11,7 @@ private const val DATABASE_NAME = "transaction_database"
 
 @Database(entities = [Transaction::class], version = 1, exportSchema = false)
 @TypeConverters(TransactionDatabaseConverters::class)
-abstract class TransactionDatabase: RoomDatabase() {
+abstract class TransactionDatabase : RoomDatabase() {
 
     abstract val dao: TransactionDatabaseDao
 
@@ -24,7 +24,7 @@ abstract class TransactionDatabase: RoomDatabase() {
 
             synchronized(this) {
                 var instance = INSTANCE
-                if(instance == null) {
+                if (instance == null) {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         TransactionDatabase::class.java,

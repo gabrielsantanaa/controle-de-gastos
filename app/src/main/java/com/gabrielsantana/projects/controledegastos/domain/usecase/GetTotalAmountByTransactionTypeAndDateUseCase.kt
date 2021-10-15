@@ -11,7 +11,7 @@ interface GetTotalAmountByTransactionTypeUseCase {
 
 class GetTotalAmountByTransactionTypeUseCaseImpl @Inject constructor(
     private val repository: TransactionRepository
-): GetTotalAmountByTransactionTypeUseCase {
+) : GetTotalAmountByTransactionTypeUseCase {
     override suspend fun invoke(transactionType: TransactionType, date: Date): Double {
         return repository.getTotalAmountByTransactionTypeUseCase(transactionType, date)
     }

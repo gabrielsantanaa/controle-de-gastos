@@ -19,8 +19,9 @@ class TransactionHistoryAdapter(
     private val onItemClick: (Transaction) -> Unit,
     private val onItemLongClick: (Transaction) -> Unit
 ) : ListAdapter<Transaction, TransactionHistoryAdapter.TransactionViewHolder>(
-        TransactionDiffCallback
-    ) {
+    TransactionDiffCallback
+) {
+
 
     class TransactionViewHolder private constructor(
         private val binding: ListItemTransactionBinding
@@ -29,9 +30,9 @@ class TransactionHistoryAdapter(
         fun bind(
             transaction: Transaction,
             onItemClick: (Transaction) -> Unit,
-            onLongItemClick: (Transaction) -> Unit
+            onItemLongClick: (Transaction) -> Unit
         ) {
-            binding.run {
+            binding.apply {
                 title.text = transaction.title
                 price.text = transaction.amountSpent.toCurrency()
                 typeIcon.setTransactionTypeIcon(transaction)
@@ -42,7 +43,7 @@ class TransactionHistoryAdapter(
                     onItemClick(transaction)
                 }
                 root.setOnLongClickListener {
-                    onLongItemClick(transaction)
+                    onItemLongClick(transaction)
                     true
                 }
             }
@@ -84,9 +85,9 @@ class TransactionHistoryAdapter(
 
 class HeaderAdapter(
     @LayoutRes private val layoutRes: Int
-): RecyclerView.Adapter<HeaderAdapter.HeaderViewHolder>() {
+) : RecyclerView.Adapter<HeaderAdapter.HeaderViewHolder>() {
 
-    class HeaderViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         companion object {
             fun create(parent: ViewGroup, @LayoutRes layoutRes: Int): HeaderViewHolder {

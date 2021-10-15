@@ -1,6 +1,5 @@
 package com.gabrielsantana.projects.controledegastos.util
 
-import android.animation.Animator
 import androidx.core.content.ContextCompat
 import com.gabrielsantana.projects.controledegastos.domain.model.Transaction
 import com.google.android.material.textview.MaterialTextView
@@ -8,6 +7,7 @@ import com.google.android.material.textview.MaterialTextView
 fun MaterialTextView.setTextColorByTransactionType(transaction: Transaction) {
     setTextColor(ContextCompat.getColor(this.context, transaction.getColorRes()))
 }
+
 fun MaterialTextView.setTextAnimation(text: String, duration: Long = 300) {
     fadOutAnimation(duration) {
         this.text = text
@@ -15,6 +15,7 @@ fun MaterialTextView.setTextAnimation(text: String, duration: Long = 300) {
         }
     }
 }
+
 fun MaterialTextView.setTextWithFadeAnimation(text: String) {
     animate()
         .setDuration(150)

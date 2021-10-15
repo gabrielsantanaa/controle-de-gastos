@@ -14,6 +14,7 @@ fun Context.themeColor(
         it.getColor(0, Color.BLACK)
     }
 }
+
 fun Context.themeInt(
     @AttrRes themeAttrId: Int
 ): Int {

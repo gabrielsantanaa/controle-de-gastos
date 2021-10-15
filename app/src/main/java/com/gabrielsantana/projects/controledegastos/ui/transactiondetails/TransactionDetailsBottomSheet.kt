@@ -11,7 +11,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TransactionDetailsBottomSheet: BottomSheetDialogFragment() {
+class TransactionDetailsBottomSheet : BottomSheetDialogFragment() {
 
     private val args: TransactionDetailsBottomSheetArgs by navArgs()
 

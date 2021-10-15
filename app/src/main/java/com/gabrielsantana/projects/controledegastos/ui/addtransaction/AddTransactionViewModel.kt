@@ -1,6 +1,5 @@
 package com.gabrielsantana.projects.controledegastos.ui.addtransaction
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gabrielsantana.projects.controledegastos.domain.model.TransactionCategory
@@ -29,16 +28,37 @@ class AddTransactionViewModel @Inject constructor(
     private val _eventChannel = Channel<Event>(Channel.BUFFERED)
     val eventChannel = _eventChannel.receiveAsFlow()
 
-    val transactionTitle = MutableLiveData<String>()
+    private var _transactionTitle: String? = null
 
-    val transactionDescription = MutableLiveData<String>()
+    private var _transactionDescription: String? = null
 
-    val transactionAmountSpent = MutableLiveData<Double>()
+    private var _transactionAmountSpent: Double? = null
 
-    val transactionType = MutableLiveData<TransactionType>()
+    private var _transactionType: TransactionType? = null
 
-    val transactionCategory = MutableLiveData<TransactionCategory>()
+    private var _transactionCategory: TransactionCategory? = null
 
+    /* update data */
+
+    fun setTransactionTitle(value: String) {
+        _transactionTitle = value
+    }
+
+    fun setTransactionDescription(value: String) {
+        _transactionDescription = value
+    }
+
+    fun setTransactionAmountSpent(value: Double) {
+        _transactionAmountSpent = value
+    }
+
+    fun setTransactionType(value: TransactionType) {
+        _transactionType = value
+    }
+
+    fun setTransactionCategory(value: TransactionCategory) {
+        _transactionCategory = value
+    }
 
     /* functions to trigger events*/
 
@@ -58,21 +78,20 @@ class AddTransactionViewModel @Inject constructor(
         }
     }
 
-
     private fun fieldsAreEmpty(): Boolean {
-        return transactionTitle.value.isNullOrEmpty() &&
-                transactionDescription.value.isNullOrEmpty() &&
-                transactionAmountSpent.value == null &&
-                transactionType.value == null &&
-                transactionCategory.value == null
+        return _transactionTitle.isNullOrEmpty() &&
+                _transactionDescription.isNullOrEmpty() &&
+                _transactionAmountSpent == null &&
+                _transactionType == null &&
+                _transactionCategory == null
     }
 
     private fun fieldsAreNotEmpty(): Boolean {
-        return !transactionTitle.value.isNullOrEmpty() &&
-                !transactionDescription.value.isNullOrEmpty() &&
-                transactionAmountSpent.value != null &&
-                transactionType.value != null &&
-                transactionCategory.value != null
+        return !_transactionTitle.isNullOrEmpty() &&
+                !_transactionDescription.isNullOrEmpty() &&
+                _transactionAmountSpent != null &&
+                _transactionType != null &&
+                _transactionCategory != null
 
     }
 
@@ -80,11 +99,11 @@ class AddTransactionViewModel @Inject constructor(
 
     fun saveTransaction(date: Date) = viewModelScope.launch(Dispatchers.IO) {
         createTransactionUseCase.invoke(
-            title = transactionTitle.value!!,
-            description = transactionDescription.value!!,
-            transactionCategory = transactionCategory.value!!,
-            amountSpent = transactionAmountSpent.value!!,
-            type = transactionType.value!!,
+            title = _transactionTitle!!,
+            description = _transactionDescription!!,
+            transactionCategory = _transactionCategory!!,
+            amountSpent = _transactionAmountSpent!!,
+            type = _transactionType!!,
             date = date
         )
         navigateToDashboardFragment()

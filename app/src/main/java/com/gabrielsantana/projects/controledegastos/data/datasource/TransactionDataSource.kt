@@ -3,7 +3,6 @@ package com.gabrielsantana.projects.controledegastos.data.datasource
 import androidx.lifecycle.LiveData
 import com.gabrielsantana.projects.controledegastos.domain.model.Transaction
 import com.gabrielsantana.projects.controledegastos.domain.model.TransactionType
-import kotlinx.coroutines.flow.Flow
 import java.util.*
 
 interface TransactionDataSource {
@@ -14,7 +13,10 @@ interface TransactionDataSource {
 
     suspend fun deleteTransaction(transaction: Transaction)
 
-    suspend fun getTotalAmountByTransactionType(transactionType: TransactionType, date: Date): Double
+    suspend fun getTotalAmountByTransactionType(
+        transactionType: TransactionType,
+        date: Date
+    ): Double
 
     fun observeTransactionsByTitle(query: String): LiveData<List<Transaction>>
 

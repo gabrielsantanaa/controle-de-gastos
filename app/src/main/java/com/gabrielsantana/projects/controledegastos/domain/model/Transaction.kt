@@ -26,7 +26,7 @@ data class Transaction(
     val amountSpent: Double,
     @ColumnInfo(name = "transaction_type")
     val transactionType: TransactionType
-): Serializable {
+) : Serializable {
     @ColorRes
     fun getColorRes() =
         if (transactionType == TransactionType.EXPENSE) R.color.red_expenses

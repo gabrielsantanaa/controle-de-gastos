@@ -12,7 +12,7 @@ interface ObserveTransactionsByDateUseCase {
 
 class ObserveTransactionsByDateUseCaseImpl @Inject constructor(
     private val repository: TransactionRepository
-): ObserveTransactionsByDateUseCase {
+) : ObserveTransactionsByDateUseCase {
     override fun invoke(date: Date): LiveData<List<Transaction>> {
         return repository.observeTransactionsByDate(date)
     }

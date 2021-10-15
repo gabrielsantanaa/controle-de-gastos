@@ -6,7 +6,7 @@ import com.gabrielsantana.projects.controledegastos.databinding.ActivityMainBind
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
     private val binding

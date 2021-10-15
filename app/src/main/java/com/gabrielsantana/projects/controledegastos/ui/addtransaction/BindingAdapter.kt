@@ -3,24 +3,36 @@ package com.gabrielsantana.projects.controledegastos.ui.addtransaction
 import android.annotation.SuppressLint
 import android.view.MotionEvent
 import android.view.View
-import androidx.core.view.children
+import androidx.core.widget.addTextChangedListener
 import com.gabrielsantana.projects.controledegastos.databinding.AddTransactionFragmentBinding
-import com.gabrielsantana.projects.controledegastos.domain.model.TransactionCategory
-import com.gabrielsantana.projects.controledegastos.domain.model.TransactionType
-import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.button.MaterialButtonToggleGroup
-import com.google.android.material.chip.ChipGroup
+import com.gabrielsantana.projects.controledegastos.util.CurrencyTextWatcher
 
-class BindingAdapter(private val viewModel: AddTransactionViewModel, private val binding: AddTransactionFragmentBinding) {
+class BindingAdapter(
+    private val viewModel: AddTransactionViewModel,
+    private val binding: AddTransactionFragmentBinding
+) {
 
     init {
         setOnClickListeners()
+        setFieldListeners()
+        setupDescriptionField()
+    }
+
+    private fun setFieldListeners() {
+        setTitleFieldListener()
+        setDescriptionFieldListener()
+        setAmountSpentFieldListener()
+        setCategoryFieldListener()
+        setTypeFieldListener()
     }
 
     private fun setOnClickListeners() {
         binding.apply {
             toolbar.setNavigationOnClickListener {
                 viewModel.onBackPressed()
+            }
+            buttonSave.setOnClickListener {
+                viewModel.showDatePicker()
             }
         }
     }
@@ -44,37 +56,35 @@ class BindingAdapter(private val viewModel: AddTransactionViewModel, private val
         }
     }
 
-    fun MaterialToolbar.setOnNavigationIconClick(onClick: () -> Unit) {
-        setNavigationOnClickListener {
-            onClick()
+    private fun setTitleFieldListener() =
+        binding.textInputEditTextTitle.addTextChangedListener {
+            viewModel.setTransactionTitle(it.toString())
+        }
+
+    private fun setDescriptionFieldListener() =
+        binding.textInputEditTextDescription.addTextChangedListener {
+            viewModel.setTransactionDescription(it.toString())
+        }
+
+    private fun setAmountSpentFieldListener() {
+        binding.textInputEditTextAmountSpent.apply {
+            addTextChangedListener(CurrencyTextWatcher(this, viewModel::setTransactionAmountSpent))
         }
     }
 
-    fun ChipGroup.setTransactionCategory(category: TransactionCategory?) {
-        category?.let {
-            val chip = children.single { (it as CustomChip).getTransactionCategory() == category } as CustomChip
-            chip.isCheckable = true
-            chip.isChecked = true
+    private fun setTypeFieldListener() =
+        binding.toggleButtonTransactionType.addOnButtonCheckedListener { _, checkedId, _ ->
+            val toggleButton = binding.root.findViewById<CustomButton>(checkedId)
+            viewModel.setTransactionType(toggleButton.getTransactionType())
         }
 
-    }
-    fun ChipGroup.getTransactionCategory(): TransactionCategory {
-        val chip = findViewById<CustomChip>(checkedChipId)
-        return chip.getTransactionCategory()
-    }
+    private fun setCategoryFieldListener() =
+        binding.chipGroupCategory.setOnCheckedChangeListener { _, checkedId ->
+            val chip = binding.root.findViewById<CustomChip?>(checkedId)
+            viewModel.setTransactionCategory(chip.getTransactionCategory())
+        }
 
-/////////////////////////////////
 
-    fun MaterialButtonToggleGroup.setTransactionCategory(type: TransactionType) {
-        val chip = children.single { (it as CustomButton).getTransactionType() == type } as CustomButton
-        chip.isCheckable = true
-        chip.isChecked = true
-    }
-
-    fun MaterialButtonToggleGroup.getTransactionCategory(): TransactionType {
-        val chip = findViewById<CustomButton>(checkedButtonId)
-        return chip.getTransactionType()
-    }
 }
 
 

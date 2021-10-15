@@ -13,7 +13,7 @@ import com.gabrielsantana.projects.controledegastos.util.increaseYear
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -28,14 +28,14 @@ class DashboardViewModel @Inject constructor(
 
     sealed class Event {
         object NavigateToAddTransaction : Event()
-        class ShowDeletionSnackbar(val transaction: Transaction): Event()
-        class ShowTransactionDetails(val transaction: Transaction): Event()
-        object ShowSelectDateDialog: Event()
+        class ShowDeletionSnackbar(val transaction: Transaction) : Event()
+        class ShowTransactionDetails(val transaction: Transaction) : Event()
+        object ShowSelectDateDialog : Event()
     }
 
     sealed class Filter(val date: Date) {
-        class AllTransactions(date: Date): Filter(date)
-        class SearchTransactions(val query: String): Filter(Date())
+        class AllTransactions(date: Date) : Filter(date)
+        class SearchTransactions(val query: String) : Filter(Date())
     }
 
     class SearchMode(val isActive: Boolean, val animate: Boolean)
@@ -46,7 +46,7 @@ class DashboardViewModel @Inject constructor(
     val transactions: LiveData<List<Transaction>> = _filter.switchMap { filter ->
         when (filter) {
             is Filter.AllTransactions -> {
-                fetchAmounts(filter.date)
+                fetchAmounts()
                 observeTransactionsByDateUseCase.invoke(filter.date)
             }
             is Filter.SearchTransactions -> {
@@ -95,7 +95,7 @@ class DashboardViewModel @Inject constructor(
         _eventChannel.send(Event.ShowDeletionSnackbar(transaction))
     }
 
-   /* functions for state change */
+    /* functions for state change */
 
     fun updateAmountsVisibility() {
         _amountsVisibility.value = !(_amountsVisibility.value!!)
@@ -129,10 +129,11 @@ class DashboardViewModel @Inject constructor(
 
     fun deleteTransaction(transaction: Transaction) = viewModelScope.launch(Dispatchers.IO) {
         deleteTransactionUseCase.invoke(transaction)
-        fetchAmounts(_filter.value!!.date)
+        fetchAmounts()
     }
 
-    private fun fetchAmounts(date: Date) {
+    fun fetchAmounts() {
+        val date = _filter.value!!.date
         viewModelScope.launch(Dispatchers.IO) {
             val expenses = getTotalAmountByTransactionTypeUseCase
                 .invoke(TransactionType.EXPENSE, date)

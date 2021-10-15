@@ -89,7 +89,8 @@ class SelectDateDialogFragment : DialogFragment() {
 
     private fun setupLiveDataObservers() {
         viewModel.filter.observe(viewLifecycleOwner) { filter ->
-            binding.textViewCurrentYear.text = filter.date.formatYear(LocaleListCompat.getDefault()[0])
+            binding.textViewCurrentYear.text =
+                filter.date.formatYear(LocaleListCompat.getDefault()[0])
         }
     }
 

@@ -71,7 +71,7 @@ class DashboardFragment : Fragment() {
 
     private fun setupOnBackPressedHandler() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, true) {
-            if(searchModeIsActive()) {
+            if (searchModeIsActive()) {
                 viewModel.updateSearchMode(show = false, animate = true)
             } else {
                 requireActivity().finish()
@@ -107,7 +107,7 @@ class DashboardFragment : Fragment() {
     }
 
     private fun showSelectDateDialog() {
-       SelectDateDialogFragment().show(childFragmentManager, null)
+        SelectDateDialogFragment().show(childFragmentManager, null)
     }
 
     private fun showTransactionDetails(transaction: Transaction) {
@@ -167,6 +167,11 @@ class DashboardFragment : Fragment() {
             val headerAdapter = HeaderAdapter(R.layout.view_holder_title)
             adapter = ConcatAdapter(headerAdapter, this@DashboardFragment.adapter)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchAmounts()
     }
 
     override fun onDestroyView() {
