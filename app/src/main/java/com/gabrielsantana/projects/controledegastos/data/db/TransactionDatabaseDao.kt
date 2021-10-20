@@ -30,5 +30,8 @@ interface TransactionDatabaseDao {
     @Query("SELECT * FROM transactions_table WHERE title LIKE :query")
     fun observeTransactionsByTitle(query: String): LiveData<List<Transaction>>
 
+    @Query("DELETE FROM transactions_table WHERE id IN (:transactions)")
+    fun deleteManyTransactionsById(transactions: List<Long>)
+
 
 }

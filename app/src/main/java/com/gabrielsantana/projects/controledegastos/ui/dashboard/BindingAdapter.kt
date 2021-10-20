@@ -2,20 +2,18 @@ package com.gabrielsantana.projects.controledegastos.ui.dashboard
 
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat
 import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.ChangeBounds
-import androidx.transition.TransitionManager
-import androidx.transition.TransitionSet
+import androidx.transition.*
 import com.gabrielsantana.projects.controledegastos.R
 import com.gabrielsantana.projects.controledegastos.databinding.DashboardFragmentBinding
 import com.gabrielsantana.projects.controledegastos.util.*
 import com.google.android.material.transition.MaterialContainerTransform
+
 
 class BindingAdapter(
     private val viewModel: DashboardViewModel,
@@ -25,9 +23,28 @@ class BindingAdapter(
 ) {
 
     init {
+
         setOnClickListeners()
         setLiveDataObservers()
         setupFabScrollingBehavior()
+        setupUiModel()
+    }
+
+
+    private fun setupUiModel() {
+        viewModel.uiModel.observe(lifecycleOwner) { uiModel ->
+            when (uiModel) {
+                is DashboardViewModel.UiModel.Dashboard -> {
+                    if (uiModel.animateUiChange) setSearchBarVisibility(show = false)
+                    else setSearchBarVisibilityNoAnim(show = false)
+
+                }
+                is DashboardViewModel.UiModel.Search -> {
+                    if (uiModel.animateUiChange) setSearchBarVisibility(show = true)
+                    else setSearchBarVisibilityNoAnim(show = true)
+                }
+            }
+        }
     }
 
     private fun setOnClickListeners() = binding.apply {
@@ -35,14 +52,14 @@ class BindingAdapter(
             viewModel.navigateToAddTransaction()
         }
         fabSearch.setOnClickListener {
-            viewModel.updateSearchMode(show = true, animate = true)
+            viewModel.updateUiModel(DashboardViewModel.UiModel.Search())
         }
         buttonSelectDate.setOnClickListener {
             viewModel.showSelectDateDialog()
         }
         buttonCloseSearchBar.setOnClickListener {
             it.hideKeyboard()
-            viewModel.updateSearchMode(show = false, animate = true)
+            viewModel.updateUiModel(DashboardViewModel.UiModel.Dashboard())
         }
         editTextSearchBar.setOnEditorActionListener { textView, action, _ ->
             if (action == EditorInfo.IME_ACTION_SEARCH) {
@@ -54,6 +71,19 @@ class BindingAdapter(
         }
         buttonBalanceVisibility.setOnClickListener {
             viewModel.updateAmountsVisibility()
+
+        }
+        toolbarSelection.setNavigationOnClickListener {
+            viewModel.closeTransactionSelection()
+        }
+        toolbarSelection.setOnMenuItemClickListener { menu ->
+            when (menu.itemId) {
+                R.id.ic_delete_transactions -> {
+                    viewModel.deleteSelectedTransactions()
+                    true
+                }
+                else -> false
+            }
         }
 
     }
@@ -69,16 +99,8 @@ class BindingAdapter(
         currentIncomes.observe(lifecycleOwner) {
             binding.textViewIncomes.text = it.toCurrency()
         }
-        filter.observe(lifecycleOwner) {
-            binding.buttonSelectDate.text =
-                it.date.formatMonthAndYear(LocaleListCompat.getDefault()[0])
-        }
-        searchMode.observe(lifecycleOwner) { searchMode ->
-            if (searchMode.animate) {
-                setSearchBarVisibility(searchMode.isActive)
-            } else {
-                setSearchBarVisibilityNoAnim(searchMode.isActive)
-            }
+        selectedDate.observe(lifecycleOwner) {
+            binding.buttonSelectDate.text = it.formatMonthAndYear(LocaleListCompat.getDefault()[0])
         }
         amountsVisibility.observe(lifecycleOwner) {
             binding.apply {
@@ -105,7 +127,17 @@ class BindingAdapter(
                 hideFabs()
             }
         }
+        selectedTransactionIds.observe(lifecycleOwner) {
+            binding.toolbarSelection.title =
+                context.getString(R.string.toolbar_selection_title, it.size.toString())
+            setSelectionToolbarVisibility(show = it.isNotEmpty())
+        }
     }
+
+    private fun setSelectionToolbarVisibility(show: Boolean) {
+        binding.toolbarSelection.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
 
     private fun hideFabs() {
         binding.fabSearch.hide()
@@ -140,16 +172,16 @@ class BindingAdapter(
         //fix fabSearch position at transformation to fab
         if (!show) fabAdd.visibility = View.INVISIBLE
 
-        val durationLong = context.themeInt(R.attr.motionDurationLong2).toLong()
+        val duration = context.themeInt(R.attr.motionDurationLong2).toLong()
 
         fabSearch.visibility = if (show) View.GONE else View.VISIBLE
         cardSearchBar.visibility = if (show) View.VISIBLE else View.GONE
 
         val changeBounds = ChangeBounds().apply {
-            duration = durationLong
+            this.duration = duration
         }
         val transform = MaterialContainerTransform().apply {
-            duration = durationLong
+            this.duration = duration
             startView = if (show) fabSearch else cardSearchBar
             endView = if (show) cardSearchBar else fabSearch
             startContainerColor = context.themeColor(R.attr.colorSecondary)
@@ -158,7 +190,7 @@ class BindingAdapter(
             isElevationShadowEnabled = true
             addTarget(if (show) fabSearch else cardSearchBar)
         }
-        circularAnimation(cardPanel, show, durationLong) {
+        circularAnimation(cardPanel, show, duration) {
             TransitionManager.beginDelayedTransition(
                 binding.rootLayout,
                 changeBounds

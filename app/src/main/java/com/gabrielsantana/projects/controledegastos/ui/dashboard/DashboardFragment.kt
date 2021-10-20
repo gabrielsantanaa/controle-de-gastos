@@ -1,6 +1,7 @@
 package com.gabrielsantana.projects.controledegastos.ui.dashboard
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ConcatAdapter
+import androidx.recyclerview.selection.SelectionPredicates
+import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.selection.StorageStrategy
 import androidx.transition.*
 import com.gabrielsantana.projects.controledegastos.R
 import com.gabrielsantana.projects.controledegastos.databinding.DashboardFragmentBinding
@@ -28,6 +31,8 @@ class DashboardFragment : Fragment() {
 
     private val viewModel: DashboardViewModel by viewModels()
 
+    private lateinit var selectionTracker: SelectionTracker<Long>
+
     private var _binding: DashboardFragmentBinding? = null
     private val binding
         get() = _binding!!
@@ -36,9 +41,6 @@ class DashboardFragment : Fragment() {
         TransactionHistoryAdapter(
             onItemClick = { transaction ->
                 viewModel.showTransactionDetails(transaction)
-            },
-            onItemLongClick = { transaction ->
-                viewModel.showDeletionSnackbar(transaction)
             }
         )
     }
@@ -67,12 +69,14 @@ class DashboardFragment : Fragment() {
         setupLiveDataObservers()
         setupFragmentTransition()
         setupEventsObserver()
+        setupRecyclerView(savedInstanceState)
     }
 
     private fun setupOnBackPressedHandler() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, true) {
+            Log.d("dashboardFragment", "onBackPressed")
             if (searchModeIsActive()) {
-                viewModel.updateSearchMode(show = false, animate = true)
+                viewModel.updateUiModel(DashboardViewModel.UiModel.Dashboard())
             } else {
                 requireActivity().finish()
             }
@@ -80,12 +84,11 @@ class DashboardFragment : Fragment() {
     }
 
     private fun searchModeIsActive(): Boolean =
-        viewModel.searchMode.value!!.isActive
+        viewModel.uiModel.value!! is DashboardViewModel.UiModel.Search
 
-    private fun setupBinding() {
-        setupRecyclerView()
+    private fun setupBinding() =
         BindingAdapter(viewModel, binding, viewLifecycleOwner, requireContext())
-    }
+
 
     private fun setupEventsObserver() {
         viewModel.eventChannel.observeOnLifecycle(viewLifecycleOwner) { event ->
@@ -101,6 +104,9 @@ class DashboardFragment : Fragment() {
                 }
                 is DashboardViewModel.Event.ShowSelectDateDialog -> {
                     showSelectDateDialog()
+                }
+                DashboardViewModel.Event.CloseTransactionSelection -> {
+                    selectionTracker.clearSelection()
                 }
             }
         }
@@ -159,13 +165,40 @@ class DashboardFragment : Fragment() {
             transactions.observe(viewLifecycleOwner) {
                 adapter.submitList(it)
             }
+
         }
     }
 
-    private fun setupRecyclerView() {
+    private fun setupRecyclerView(savedInstanceState: Bundle?) {
+
         binding.transactionsRecycler.apply {
-            val headerAdapter = HeaderAdapter(R.layout.view_holder_title)
-            adapter = ConcatAdapter(headerAdapter, this@DashboardFragment.adapter)
+            adapter = this@DashboardFragment.adapter
+
+            selectionTracker = SelectionTracker.Builder<Long>(
+                "mySelection",
+                this,
+                TransactionHistoryAdapter.MyItemKeyProvider(this@DashboardFragment.adapter),
+                TransactionHistoryAdapter.MyItemDetailsLookup(this),
+                StorageStrategy.createLongStorage()
+            ).withSelectionPredicate(
+                SelectionPredicates.createSelectAnything()
+            ).build()
+            selectionTracker.onRestoreInstanceState(savedInstanceState)
+
+            this@DashboardFragment.adapter.tracker = selectionTracker
+
+            selectionTracker.addObserver(object : SelectionTracker.SelectionObserver<Long>() {
+                override fun onSelectionChanged() {
+                    viewModel.updateSelectedTransactionIds(selectionTracker.selection.toList())
+                }
+            })
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (::selectionTracker.isInitialized) {
+            selectionTracker.onSaveInstanceState(outState)
         }
     }
 
@@ -176,10 +209,7 @@ class DashboardFragment : Fragment() {
 
     override fun onDestroyView() {
         _binding = null
-        viewModel.updateSearchMode(
-            viewModel.searchMode.value!!.isActive,
-            false
-        )
+        viewModel.disableAnimationOnUiModelChange()
         super.onDestroyView()
     }
 

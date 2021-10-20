@@ -3,10 +3,7 @@ package com.gabrielsantana.projects.controledegastos.ui.dashboard
 import androidx.lifecycle.*
 import com.gabrielsantana.projects.controledegastos.domain.model.Transaction
 import com.gabrielsantana.projects.controledegastos.domain.model.TransactionType
-import com.gabrielsantana.projects.controledegastos.domain.usecase.DeleteTransactionUseCase
-import com.gabrielsantana.projects.controledegastos.domain.usecase.GetTotalAmountByTransactionTypeUseCase
-import com.gabrielsantana.projects.controledegastos.domain.usecase.ObserveTransactionsByDateUseCase
-import com.gabrielsantana.projects.controledegastos.domain.usecase.ObserveTransactionsByTitleUseCase
+import com.gabrielsantana.projects.controledegastos.domain.usecase.*
 import com.gabrielsantana.projects.controledegastos.util.asLiveData
 import com.gabrielsantana.projects.controledegastos.util.decreaseYear
 import com.gabrielsantana.projects.controledegastos.util.increaseYear
@@ -23,7 +20,8 @@ class DashboardViewModel @Inject constructor(
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
     private val getTotalAmountByTransactionTypeUseCase: GetTotalAmountByTransactionTypeUseCase,
     private val observeTransactionsByDateUseCase: ObserveTransactionsByDateUseCase,
-    private val observeTransactionsByTitleUseCase: ObserveTransactionsByTitleUseCase
+    private val observeTransactionsByTitleUseCase: ObserveTransactionsByTitleUseCase,
+    private val deleteManyTransactionsByIdUseCase: DeleteManyTransactionsByIdUseCase
 ) : ViewModel() {
 
     sealed class Event {
@@ -31,38 +29,52 @@ class DashboardViewModel @Inject constructor(
         class ShowDeletionSnackbar(val transaction: Transaction) : Event()
         class ShowTransactionDetails(val transaction: Transaction) : Event()
         object ShowSelectDateDialog : Event()
+        object CloseTransactionSelection : Event()
     }
 
-    sealed class Filter(val date: Date) {
-        class AllTransactions(date: Date) : Filter(date)
-        class SearchTransactions(val query: String) : Filter(Date())
+    sealed class TransactionFilter {
+        class TransactionByDate(val date: Date) : TransactionFilter()
+        class TransactionByTitle(val query: String) : TransactionFilter()
     }
 
-    class SearchMode(val isActive: Boolean, val animate: Boolean)
+    sealed class UiModel(var animateUiChange: Boolean) {
+        class Search(animateUiChange: Boolean = true) : UiModel(animateUiChange)
+        class Dashboard(animateUiChange: Boolean = true) : UiModel(animateUiChange)
+    }
 
-    private val _filter = MutableLiveData<Filter>(Filter.AllTransactions(Date()))
-    val filter = _filter.asLiveData()
+    private val _uiModel = MutableLiveData<UiModel>(
+        //do not anim the first UiModel state
+        UiModel.Dashboard(animateUiChange = false)
+    )
 
-    val transactions: LiveData<List<Transaction>> = _filter.switchMap { filter ->
+    val uiModel = _uiModel.asLiveData()
+
+    private val _selectedDate = MutableLiveData(Date())
+    val selectedDate = _selectedDate.asLiveData()
+
+    private val _transactionFilter = MutableLiveData<TransactionFilter>(
+        TransactionFilter.TransactionByDate(_selectedDate.value!!)
+    )
+
+    val transactions: LiveData<List<Transaction>> = _transactionFilter.switchMap { filter ->
         when (filter) {
-            is Filter.AllTransactions -> {
-                fetchAmounts()
+            is TransactionFilter.TransactionByDate -> {
                 observeTransactionsByDateUseCase.invoke(filter.date)
             }
-            is Filter.SearchTransactions -> {
-                observeTransactionsByTitleUseCase.invoke("%${filter.query}%")
+            is TransactionFilter.TransactionByTitle -> {
+                observeTransactionsByTitleUseCase.invoke(filter.query)
             }
         }
     }
+
+    private val _selectedTransactionIds = MutableLiveData(listOf<Long>())
+    val selectedTransactionIds = _selectedTransactionIds.asLiveData()
 
     private val _eventChannel = Channel<Event>(Channel.BUFFERED)
     val eventChannel = _eventChannel.receiveAsFlow()
 
     private val _amountsVisibility = MutableLiveData(true)
     val amountsVisibility = _amountsVisibility.asLiveData()
-
-    private val _searchMode = MutableLiveData(SearchMode(isActive = false, animate = false))
-    val searchMode = _searchMode.asLiveData()
 
     private val _currentBalance = MutableLiveData(0.0)
     val currentBalance = _currentBalance.asLiveData()
@@ -75,7 +87,6 @@ class DashboardViewModel @Inject constructor(
 
     private val _fabsVisibility = MutableLiveData(true)
     val fabsVisibility = _fabsVisibility.asLiveData()
-
 
     /* functions to call events */
 
@@ -91,8 +102,8 @@ class DashboardViewModel @Inject constructor(
         _eventChannel.send(Event.ShowTransactionDetails(transaction))
     }
 
-    fun showDeletionSnackbar(transaction: Transaction) = viewModelScope.launch {
-        _eventChannel.send(Event.ShowDeletionSnackbar(transaction))
+    fun closeTransactionSelection() = viewModelScope.launch {
+        _eventChannel.send(Event.CloseTransactionSelection)
     }
 
     /* functions for state change */
@@ -105,24 +116,35 @@ class DashboardViewModel @Inject constructor(
         _fabsVisibility.value = show
     }
 
-    fun updateSearchMode(show: Boolean, animate: Boolean) {
-        _searchMode.value = SearchMode(show, animate)
+    fun updateSelectedTransactionIds(list: List<Long>) {
+        _selectedTransactionIds.value = list
     }
 
     fun filterTransactionsByTitle(query: String) {
-        _filter.value = Filter.SearchTransactions(query)
+        _transactionFilter.value = TransactionFilter.TransactionByTitle(query)
     }
 
     fun decreaseYearFromDate() {
-        _filter.value = Filter.AllTransactions(filter.value!!.date.decreaseYear())
+        _selectedDate.value = _selectedDate.value!!.decreaseYear()
     }
 
     fun increaseYearFromDate() {
-        _filter.value = Filter.AllTransactions(filter.value!!.date.increaseYear())
+        _selectedDate.value = _selectedDate.value!!.increaseYear()
     }
 
     fun updateDate(date: Date) {
-        _filter.value = Filter.AllTransactions(date)
+        _selectedDate.value = date
+    }
+
+    /* UiModel update */
+    fun updateUiModel(uiModel: UiModel) {
+        //each UiModel update must close the transaction selection
+        closeTransactionSelection()
+        _uiModel.value = uiModel
+    }
+
+    fun disableAnimationOnUiModelChange() {
+        _uiModel.value!!.animateUiChange = false
     }
 
     /* use cases */
@@ -132,8 +154,14 @@ class DashboardViewModel @Inject constructor(
         fetchAmounts()
     }
 
+    fun deleteSelectedTransactions() = viewModelScope.launch(Dispatchers.IO) {
+        deleteManyTransactionsByIdUseCase.invoke(_selectedTransactionIds.value!!)
+        closeTransactionSelection()
+        fetchAmounts()
+    }
+
     fun fetchAmounts() {
-        val date = _filter.value!!.date
+        val date = _selectedDate.value!!
         viewModelScope.launch(Dispatchers.IO) {
             val expenses = getTotalAmountByTransactionTypeUseCase
                 .invoke(TransactionType.EXPENSE, date)

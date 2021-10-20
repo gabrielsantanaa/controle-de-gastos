@@ -29,5 +29,9 @@ class TransactionRepository @Inject constructor(
     fun observeTransactionsByTitle(query: String): LiveData<List<Transaction>> =
         dataSource.observeTransactionsByTitle(query)
 
+    fun deleteManyTransactionsById(transactions: List<Long>) {
+        dataSource.deleteManyTransactionsById(transactions)
+    }
+
 
 }

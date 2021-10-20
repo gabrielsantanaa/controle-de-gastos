@@ -20,4 +20,6 @@ interface TransactionDataSource {
 
     fun observeTransactionsByTitle(query: String): LiveData<List<Transaction>>
 
+    fun deleteManyTransactionsById(transactions: List<Long>)
+
 }

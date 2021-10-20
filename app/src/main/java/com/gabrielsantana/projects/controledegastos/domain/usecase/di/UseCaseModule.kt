@@ -24,4 +24,7 @@ interface UseCaseModule {
 
     @Binds
     fun bindObserveTransactionsByTitle(useCase: ObserveTransactionsByTitleUseCaseImpl): ObserveTransactionsByTitleUseCase
+
+    @Binds
+    fun bindDeleteManyTransactionsById(useCase: DeleteManyTransactionsByIdUseCaseImpl): DeleteManyTransactionsByIdUseCase
 }

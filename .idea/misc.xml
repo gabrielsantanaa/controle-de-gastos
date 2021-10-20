@@ -43,6 +43,7 @@
         <entry key="app/src/main/res/drawable/ic_round_arrow_forward_ios_24.xml" value="0.2490740740740741" />
         <entry key="app/src/main/res/drawable/ic_round_calendar_today_24.xml" value="0.5419847328244275" />
         <entry key="app/src/main/res/drawable/ic_round_closed_eye.xml" value="0.325" />
+        <entry key="app/src/main/res/drawable/ic_round_delete_24.xml" value="0.319634703196347" />
         <entry key="app/src/main/res/drawable/ic_round_directions_bus_24.xml" value="0.33" />
         <entry key="app/src/main/res/drawable/ic_round_directions_bus_no_start_padding24.xml" value="0.3703125" />
         <entry key="app/src/main/res/drawable/ic_round_fastfood_24.xml" value="0.3333333333333333" />
@@ -71,12 +72,13 @@
         <entry key="app/src/main/res/drawable/selector_test.xml" value="0.32465753424657534" />
         <entry key="app/src/main/res/drawable/shape_circle_image.xml" value="0.2740740740740741" />
         <entry key="app/src/main/res/drawable/slide_from_left.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/drawable/stroke_color.xml" value="0.319634703196347" />
         <entry key="app/src/main/res/drawable/test.xml" value="0.3646153846153846" />
         <entry key="app/src/main/res/drawable/teste.xml" value="0.32465753424657534" />
         <entry key="app/src/main/res/drawable/to_left.xml" value="0.3333333333333333" />
         <entry key="app/src/main/res/drawable/to_right.xml" value="0.3333333333333333" />
         <entry key="app/src/main/res/layout-land/add_transaction_fragment.xml" value="0.2" />
-        <entry key="app/src/main/res/layout-land/dashboard_fragment.xml" value="0.25" />
+        <entry key="app/src/main/res/layout-land/dashboard_fragment.xml" value="0.16" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/add_transaction_fragment.xml" value="0.28703703703703703" />
         <entry key="app/src/main/res/layout/button_transaction_type.xml" value="0.3148148148148148" />
@@ -88,14 +90,19 @@
         <entry key="app/src/main/res/layout/fragment_item_list_dialog_list_dialog.xml" value="0.3541666666666667" />
         <entry key="app/src/main/res/layout/fragment_item_list_dialog_list_dialog_item.xml" value="0.3541666666666667" />
         <entry key="app/src/main/res/layout/fragment_search_transaction.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/k.xml" value="0.30972222222222223" />
         <entry key="app/src/main/res/layout/list_chip_category.xml" value="0.3148148148148148" />
         <entry key="app/src/main/res/layout/list_item.xml" value="0.33" />
         <entry key="app/src/main/res/layout/list_item_menu.xml" value="0.25" />
         <entry key="app/src/main/res/layout/list_item_transaction.xml" value="0.33" />
         <entry key="app/src/main/res/layout/list_title.xml" value="0.3148148148148148" />
+        <entry key="app/src/main/res/layout/test.xml" value="0.5805168986083499" />
+        <entry key="app/src/main/res/layout/toolbar_selection.xml" value="0.30925925925925923" />
         <entry key="app/src/main/res/layout/view_holder_title.xml" value="0.3148148148148148" />
         <entry key="app/src/main/res/menu/bottom_app_bar_menu.xml" value="0.3105022831050228" />
+        <entry key="app/src/main/res/menu/menu_fab.xml" value="0.30972222222222223" />
         <entry key="app/src/main/res/menu/month_menu.xml" value="0.3541666666666667" />
+        <entry key="app/src/main/res/menu/toolbar_selection_menu.xml" value="0.30972222222222223" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_expenses.xml" value="0.2740740740740741" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_expenses_round.xml" value="0.2740740740740741" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2740740740740741" />

@@ -37,4 +37,8 @@ class RoomTransactionDataSource @Inject constructor(
     override fun observeTransactionsByTitle(query: String): LiveData<List<Transaction>> {
         return dao.observeTransactionsByTitle(query)
     }
+
+    override fun deleteManyTransactionsById(transactions: List<Long>) {
+        dao.deleteManyTransactionsById(transactions)
+    }
 }

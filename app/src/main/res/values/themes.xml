@@ -21,6 +21,7 @@
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.App.LargeComponent</item>
 
+
     </style>
 
     <style name="Widget.App.Chip.Choice" parent="Widget.MaterialComponents.Chip.Choice">

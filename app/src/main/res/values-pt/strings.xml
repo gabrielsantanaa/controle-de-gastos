@@ -31,6 +31,7 @@
     <string name="dashboard_recycler_transactions_header">Histórico de rendimentos e despesas</string>
     <string name="deletion_confirmation_snackbar_message">Você deseja exlcuir essa transação?</string>
     <string name="deletion_confirmation_snackbar_action">Excluir</string>
+    <string name="toolbar_selection_title">%1$s itens selecionados</string>
 
     <!--  Select Date Dialog Fragment  -->
     <string name="select_date_dialog_fragment_close_button">Fechar</string>
