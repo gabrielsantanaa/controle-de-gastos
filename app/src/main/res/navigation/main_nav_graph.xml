@@ -3,41 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/dashboardFragment">
+    app:startDestination="@id/nav_dashboard"
+    >
 
-    <fragment
-        android:id="@+id/dashboardFragment"
-        android:name="com.gabrielsantana.projects.controledegastos.ui.dashboard.DashboardFragment"
-        android:label="dashboard_fragment"
-        tools:layout="@layout/dashboard_fragment" >
-        <action
-            android:id="@+id/action_dashboardFragment_to_addTransactionFragment"
-            app:destination="@id/addTransactionFragment" />
-        <action
-            android:id="@+id/action_dashboardFragment_to_transactionDetailsBottomSheet"
-            app:destination="@id/transactionDetailsBottomSheet" />
-        <action
-            android:id="@+id/action_dashboardFragment_to_selectDateDialogFragment"
-            app:destination="@id/selectDateDialogFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/addTransactionFragment"
-        android:name="com.gabrielsantana.projects.controledegastos.ui.addtransaction.AddTransactionFragment"
-        android:label="add_transaction_fragment"
-        tools:layout="@layout/add_transaction_fragment" />
-    <dialog
-        android:id="@+id/transactionDetailsBottomSheet"
-        android:name="com.gabrielsantana.projects.controledegastos.ui.transactiondetails.TransactionDetailsBottomSheet"
-        android:label="TransactionDetailsBottomSheet"
-        tools:layout="@layout/dialog_fragment_transaction_details">
-        <argument
-            android:name="transaction"
-            app:argType="com.gabrielsantana.projects.controledegastos.domain.model.Transaction" />
-    </dialog>
-    <dialog
-        android:id="@+id/selectDateDialogFragment"
-        android:name="com.gabrielsantana.projects.controledegastos.ui.selectdate.SelectDateDialogFragment"
-        android:label="SelectDateDialogFragment" />
+    <include app:graph="@navigation/nav_dashboard"/>
+    <include app:graph="@navigation/nav_transaction_history"/>
+    <include app:graph="@navigation/nav_add_transaction"/>
+
+
+<!--    -->
+<!--    <dialog-->
+<!--        android:id="@+id/selectDateDialogFragment"-->
+<!--        android:name="com.gabrielsantana.projects.controledegastos.ui.selectdate.SelectDateDialogFragment"-->
+<!--        android:label="SelectDateDialogFragment" />-->
 
 
 </navigation>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_dashboard"
+        android:icon="@drawable/ic_round_space_dashboard_24"
+        android:enabled="true"
+        android:title="Dashboard"
+        />
+
+    <item
+        android:id="@+id/nav_transaction_history"
+        android:icon="@drawable/ic_round_list_24"
+        android:enabled="true"
+        android:title="History"
+        />
+
+    <item
+        android:id="@+id/nav_add_transaction"
+        android:icon="@drawable/ic_round_addchart_24"
+        android:enabled="true"
+        android:title="Add Transaction"
+        />
+
+</menu>

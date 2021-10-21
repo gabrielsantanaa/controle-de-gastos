@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.core.view.ViewCompat
 import androidx.core.view.ViewGroupCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
@@ -15,14 +14,13 @@ import com.gabrielsantana.projects.controledegastos.R
 import com.gabrielsantana.projects.controledegastos.databinding.AddTransactionFragmentBinding
 import com.gabrielsantana.projects.controledegastos.domain.model.TransactionCategory
 import com.gabrielsantana.projects.controledegastos.domain.model.TransactionType
+import com.gabrielsantana.projects.controledegastos.ui.components.CustomButton
+import com.gabrielsantana.projects.controledegastos.ui.components.CustomChip
 import com.gabrielsantana.projects.controledegastos.util.observeOnLifecycle
-import com.gabrielsantana.projects.controledegastos.util.setStatusBarColorSmoothly
-import com.gabrielsantana.projects.controledegastos.util.themeColor
-import com.gabrielsantana.projects.controledegastos.util.themeInt
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -37,12 +35,9 @@ class AddTransactionFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = MaterialContainerTransform().apply {
-            duration = requireContext().themeInt(R.attr.motionDurationLong2).toLong()
-            endContainerColor = requireContext().themeColor(R.attr.colorSurface)
-            startContainerColor = requireContext().themeColor(R.attr.colorSurface)
-            isElevationShadowEnabled = false
-        }
+
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, /* forward= */ true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.Z, /* forward= */ false)
 
     }
 
@@ -57,7 +52,7 @@ class AddTransactionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        requireActivity().window.setStatusBarColorSmoothly(R.attr.colorPrimary)
+        //requireActivity().window.setStatusBarColorSmoothly(R.attr.colorPrimary)
 
         setupBinding()
         setupTransition()
@@ -106,7 +101,7 @@ class AddTransactionFragment : Fragment() {
                     navigateToDashboardFragment()
                 }
                 AddTransactionViewModel.Event.ShowDatePicker -> {
-                    showDatePicker()
+
                 }
                 AddTransactionViewModel.Event.InvalidFields -> {
                     showMissingFieldsWarning()
@@ -132,7 +127,7 @@ class AddTransactionFragment : Fragment() {
 
     private fun showMissingFieldsWarning() {
         Snackbar.make(
-            binding.rootLayout,
+            binding.root,
             R.string.incomplete_fields_snackbar_message,
             Snackbar.LENGTH_SHORT
         )
@@ -140,11 +135,7 @@ class AddTransactionFragment : Fragment() {
     }
 
     private fun setupTransition() {
-        ViewCompat.setTransitionName(
-            binding.root,
-            getString(R.string.dashboard_to_add_transaction_transition_name)
-        )
-        ViewGroupCompat.setTransitionGroup(binding.rootLayout, true)
+        ViewGroupCompat.setTransitionGroup(binding.root, true)
     }
 
 

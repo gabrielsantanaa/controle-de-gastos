@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_add_transaction"
+    app:startDestination="@id/fragment_add_transaction">
+
+    <fragment
+        android:id="@+id/fragment_add_transaction"
+        android:name="com.gabrielsantana.projects.controledegastos.ui.addtransaction.AddTransactionFragment"
+        android:label="@string/add_transaction_fragment_label" >
+    </fragment>
+
+</navigation>

@@ -1,4 +1,4 @@
-package com.gabrielsantana.projects.controledegastos.ui.addtransaction
+package com.gabrielsantana.projects.controledegastos.ui.components
 
 import android.annotation.SuppressLint
 import android.content.Context

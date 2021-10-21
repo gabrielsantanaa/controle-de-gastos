@@ -50,11 +50,13 @@
         <entry key="app/src/main/res/drawable/ic_round_fastfood_selected24.xml" value="0.25277777777777777" />
         <entry key="app/src/main/res/drawable/ic_round_food_bank_24.xml" value="0.325" />
         <entry key="app/src/main/res/drawable/ic_round_keyboard_arrow_down_24.xml" value="0.3333333333333333" />
+        <entry key="app/src/main/res/drawable/ic_round_list_24.xml" value="0.3111111111111111" />
         <entry key="app/src/main/res/drawable/ic_round_menu_24.xml" value="0.32465753424657534" />
         <entry key="app/src/main/res/drawable/ic_round_money_24.xml" value="0.32465753424657534" />
         <entry key="app/src/main/res/drawable/ic_round_payment_24.xml" value="0.3333333333333333" />
         <entry key="app/src/main/res/drawable/ic_round_search_24.xml" value="0.32465753424657534" />
         <entry key="app/src/main/res/drawable/ic_round_several_24.xml" value="0.32465753424657534" />
+        <entry key="app/src/main/res/drawable/ic_round_space_dashboard_24.xml" value="0.3111111111111111" />
         <entry key="app/src/main/res/drawable/ic_round_warning_24.xml" value="0.32465753424657534" />
         <entry key="app/src/main/res/drawable/ic_round_warning_amber_24.xml" value="0.32465753424657534" />
         <entry key="app/src/main/res/drawable/ic_search_black_24dp.xml" value="0.32465753424657534" />
@@ -98,8 +100,11 @@
         <entry key="app/src/main/res/layout/list_title.xml" value="0.3148148148148148" />
         <entry key="app/src/main/res/layout/test.xml" value="0.5805168986083499" />
         <entry key="app/src/main/res/layout/toolbar_selection.xml" value="0.30925925925925923" />
+        <entry key="app/src/main/res/layout/transaction_history_fragment.xml" value="0.30972222222222223" />
         <entry key="app/src/main/res/layout/view_holder_title.xml" value="0.3148148148148148" />
         <entry key="app/src/main/res/menu/bottom_app_bar_menu.xml" value="0.3105022831050228" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.30972222222222223" />
+        <entry key="app/src/main/res/menu/main_nav.xml" value="0.30972222222222223" />
         <entry key="app/src/main/res/menu/menu_fab.xml" value="0.30972222222222223" />
         <entry key="app/src/main/res/menu/month_menu.xml" value="0.3541666666666667" />
         <entry key="app/src/main/res/menu/toolbar_selection_menu.xml" value="0.30972222222222223" />

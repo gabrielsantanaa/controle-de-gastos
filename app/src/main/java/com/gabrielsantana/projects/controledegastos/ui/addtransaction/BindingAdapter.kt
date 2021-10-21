@@ -5,6 +5,8 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import com.gabrielsantana.projects.controledegastos.databinding.AddTransactionFragmentBinding
+import com.gabrielsantana.projects.controledegastos.ui.components.CustomButton
+import com.gabrielsantana.projects.controledegastos.ui.components.CustomChip
 import com.gabrielsantana.projects.controledegastos.util.CurrencyTextWatcher
 
 class BindingAdapter(
@@ -28,9 +30,6 @@ class BindingAdapter(
 
     private fun setOnClickListeners() {
         binding.apply {
-            toolbar.setNavigationOnClickListener {
-                viewModel.onBackPressed()
-            }
             buttonSave.setOnClickListener {
                 viewModel.showDatePicker()
             }

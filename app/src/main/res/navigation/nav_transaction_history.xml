@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_transaction_history"
+    app:startDestination="@id/fragment_transaction_history">
+
+    <fragment
+        android:id="@+id/fragment_transaction_history"
+        android:name="com.gabrielsantana.projects.controledegastos.ui.transationhistory.TransactionHistoryFragment"
+        android:label="@string/transaction_history_fragment_label"
+        tools:layout="@layout/transaction_history_fragment">
+
+    </fragment>
+    <dialog
+        android:id="@+id/transactionDetailsBottomSheet"
+        android:name="com.gabrielsantana.projects.controledegastos.ui.transactiondetails.TransactionDetailsBottomSheet"
+        android:label="TransactionDetailsBottomSheet"
+        tools:layout="@layout/dialog_fragment_transaction_details">
+
+    </dialog>
+</navigation>

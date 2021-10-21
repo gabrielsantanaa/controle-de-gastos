@@ -6,6 +6,7 @@
     <string name="add_transaction_text_hint_description">Descrição</string>
     <string name="add_transaction_text_hint_amount">Valor</string>
     <string name="add_transaction_button_save">Salvar</string>
+    <string name="add_transaction_fragment_label">Nova transação</string>
     <string name="closing_confirmation_dialog_title">Descartar dados?</string>
     <string name="closing_confirmation_dialog_message">Todas as alterações serão perdidas ao sair.</string>
     <string name="closing_confirmation_dialog_positive_button">Descartar</string>
@@ -28,6 +29,7 @@
     <string name="dashboard_text_expenses">Despesa</string>
     <string name="dashboard_text_balance_available">Saldo disponível</string>
     <string name="dashboard_text_hint_searchbar">Pesquisar</string>
+    <string name="dashboard_fragment_label">Painel de controle</string>
     <string name="dashboard_recycler_transactions_header">Histórico de rendimentos e despesas</string>
     <string name="deletion_confirmation_snackbar_message">Você deseja exlcuir essa transação?</string>
     <string name="deletion_confirmation_snackbar_action">Excluir</string>
@@ -36,6 +38,9 @@
     <!--  Select Date Dialog Fragment  -->
     <string name="select_date_dialog_fragment_close_button">Fechar</string>
     <string name="select_date_dialog_fragment_current_date_button">Data atual</string>
+
+    <!--  Transaction History Fragment  -->
+    <string name="transaction_history_fragment_label">Histórico de transações</string>
 
 
 </resources>
