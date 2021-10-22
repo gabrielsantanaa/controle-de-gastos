@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class TransactionDetailsBottomSheet : BottomSheetDialogFragment() {
 
-    //private val args: TransactionDetailsBottomSheetArgs by navArgs()
+    private val args: TransactionDetailsBottomSheetArgs by navArgs()
 
     private var _binding: DialogFragmentTransactionDetailsBinding? = null
     private val binding
@@ -35,16 +35,16 @@ class TransactionDetailsBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun setupTransactionData() {
-//        binding.apply {
-//            categoryIcon.setTransactionCategoryIcon(args.transaction)
-//            transactionTitle.text = args.transaction.title
-//            transactionCategory.setText(args.transaction.transactionCategory.nameStringRes)
-//            transactionDescription.text = args.transaction.description
-//            transactionDate.text = args.transaction.dateCreation.formatDate()
-//            transactionTypeIcon.setTransactionTypeIcon(args.transaction)
-//            transactionPrice.text = args.transaction.amountSpent.toCurrency()
-//            transactionPrice.setTextColorByTransactionType(args.transaction)
-//        }
+        binding.apply {
+            categoryIcon.setTransactionCategoryIcon(args.transaction)
+            transactionTitle.text = args.transaction.title
+            transactionCategory.setText(args.transaction.transactionCategory.nameStringRes)
+            transactionDescription.text = args.transaction.description
+            transactionDate.text = args.transaction.dateCreation.formatDate()
+            transactionTypeIcon.setTransactionTypeIcon(args.transaction)
+            transactionPrice.text = args.transaction.amountSpent.toCurrency()
+            transactionPrice.setTextColorByTransactionType(args.transaction)
+        }
     }
 
     override fun onDestroyView() {

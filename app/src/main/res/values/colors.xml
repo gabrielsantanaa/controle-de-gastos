@@ -26,6 +26,8 @@
     <color name="secondaryTextColor">#000000</color>
 
     <color name="strokeColor" tools:ignore="ReferenceType">@drawable/stroke_color</color>
+
+    <color name="popup_background_color">#F3F3F3</color>
 </resources>
 
 

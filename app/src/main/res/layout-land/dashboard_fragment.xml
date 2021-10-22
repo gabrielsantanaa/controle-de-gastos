@@ -5,7 +5,8 @@
     tools:context=".ui.dashboard.DashboardFragment"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dashboard_fragment">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_search_bar"

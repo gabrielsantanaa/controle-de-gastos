@@ -1,6 +1,7 @@
 package com.gabrielsantana.projects.controledegastos.data.repository
 
 import androidx.lifecycle.LiveData
+import androidx.paging.PagingSource
 import com.gabrielsantana.projects.controledegastos.data.datasource.TransactionDataSource
 import com.gabrielsantana.projects.controledegastos.domain.model.Transaction
 import com.gabrielsantana.projects.controledegastos.domain.model.TransactionType
@@ -14,7 +15,7 @@ class TransactionRepository @Inject constructor(
     suspend fun createTransaction(transaction: Transaction) =
         dataSource.createTransaction(transaction)
 
-    fun observeTransactionsByDate(date: Date): LiveData<List<Transaction>> =
+    fun observeTransactionsByDate(date: Date): PagingSource<Int, Transaction> =
         dataSource.observeTransactionsByDate(date)
 
     suspend fun deleteTransaction(transaction: Transaction) =
@@ -26,7 +27,7 @@ class TransactionRepository @Inject constructor(
     ): Double =
         dataSource.getTotalAmountByTransactionType(transactionType, date)
 
-    fun observeTransactionsByTitle(query: String): LiveData<List<Transaction>> =
+    fun observeTransactionsByTitle(query: String): PagingSource<Int, Transaction> =
         dataSource.observeTransactionsByTitle(query)
 
     fun deleteManyTransactionsById(transactions: List<Long>) {

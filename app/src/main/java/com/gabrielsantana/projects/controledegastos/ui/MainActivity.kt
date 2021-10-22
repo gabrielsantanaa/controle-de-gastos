@@ -1,6 +1,11 @@
 package com.gabrielsantana.projects.controledegastos.ui
 
+import android.animation.LayoutTransition
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.transition.ChangeBounds
+import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -12,7 +17,9 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.gabrielsantana.projects.controledegastos.R
 import com.gabrielsantana.projects.controledegastos.databinding.ActivityMainBinding
+import com.gabrielsantana.projects.controledegastos.util.circularAnimation
 import dagger.hilt.android.AndroidEntryPoint
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import java.security.AccessControlContext
 
 @AndroidEntryPoint
@@ -26,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     private val binding
         get() = _binding!!
 
+    @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
@@ -37,7 +45,11 @@ class MainActivity : AppCompatActivity() {
         initAppBarConfiguration()
         setupBottomNav()
 
+        binding.appbarLayout.layoutTransition = LayoutTransition().apply {
+
+        }
         navController.addOnDestinationChangedListener { _, destination, _ ->
+            supportActionBar?.hide()
             when (destination.id) {
                 R.id.fragment_dashboard -> {
                     setupToolbarForDashboard()
@@ -50,6 +62,12 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        KeyboardVisibilityEvent.setEventListener(this) {
+            binding.bottomNav.visibility = if(it) View.GONE else View.VISIBLE
+        }
+        supportActionBar?.hide()
+
     }
 
     private fun setupToolbarForAddTransaction() {

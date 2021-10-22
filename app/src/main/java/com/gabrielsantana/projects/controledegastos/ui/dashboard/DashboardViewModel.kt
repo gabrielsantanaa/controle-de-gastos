@@ -17,8 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
-    private val getTotalAmountByTransactionTypeUseCase: GetTotalAmountByTransactionTypeUseCase,
-    private val observeTransactionsByDateUseCase: ObserveTransactionsByDateUseCase
+    private val getTotalAmountByTransactionTypeUseCase: GetTotalAmountByTransactionTypeUseCase
 ) : ViewModel() {
 
     sealed class Event {
@@ -29,9 +28,6 @@ class DashboardViewModel @Inject constructor(
     private val _selectedDate = MutableLiveData(Date())
     val selectedDate = _selectedDate.asLiveData()
 
-    val transactions: LiveData<List<Transaction>> = _selectedDate.switchMap { date ->
-        observeTransactionsByDateUseCase(date)
-    }
 
     private val _eventChannel = Channel<Event>(Channel.BUFFERED)
     val eventChannel = _eventChannel.receiveAsFlow()

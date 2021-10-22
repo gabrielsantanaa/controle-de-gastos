@@ -1,5 +1,6 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
     <style name="Theme.ControleDeGastos" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primaryLightColor</item>
@@ -11,26 +12,18 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="android:windowLightStatusBar">true</item>
 
         <!-- Customize your theme here. -->
         <item name="android:popupMenuStyle">@style/Widget.App.PopupMenu</item>
         <item name="fontFamily">@font/source_sans_font</item>
         <item name="android:fontFamily">@font/source_sans_font</item>
-        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent
+        </item>
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.App.LargeComponent</item>
 
 
 
     </style>
-
-    <style name="Widget.App.AlertDialog" parent="Theme.MaterialComponents.Dialog">
-        <item name="android:background">@color/low_black</item>
-    </style>
-    <style name="Widget.App.Toolbar.Primary" parent="Widget.MaterialComponents.Toolbar.Primary">
-
-        <item name="navigationIconTint">@color/white</item>
-        <item name="titleTextColor">@color/white</item>
-    </style>
-
 </resources>

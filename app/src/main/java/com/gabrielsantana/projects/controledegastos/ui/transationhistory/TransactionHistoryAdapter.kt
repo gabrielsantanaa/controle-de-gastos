@@ -1,4 +1,4 @@
-package com.gabrielsantana.projects.controledegastos.ui.dashboard
+package com.gabrielsantana.projects.controledegastos.ui.transationhistory
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -6,11 +6,11 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.selection.ItemKeyProvider
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.gabrielsantana.projects.controledegastos.databinding.ListItemTransactionBinding
 import com.gabrielsantana.projects.controledegastos.domain.model.Transaction
@@ -19,10 +19,20 @@ import com.gabrielsantana.projects.controledegastos.util.setTransactionCategoryI
 import com.gabrielsantana.projects.controledegastos.util.setTransactionTypeIcon
 import com.gabrielsantana.projects.controledegastos.util.toCurrency
 
+val transactionItemCallback = object: DiffUtil.ItemCallback<Transaction>() {
+    override fun areItemsTheSame(oldItem: Transaction, newItem: Transaction): Boolean =
+        oldItem.id == newItem.id
+
+
+    override fun areContentsTheSame(oldItem: Transaction, newItem: Transaction): Boolean =
+        newItem == oldItem
+
+}
+
 class TransactionHistoryAdapter(
     private val onItemClick: (Transaction) -> Unit
-) : ListAdapter<Transaction, TransactionHistoryAdapter.TransactionViewHolder>(
-    TransactionDiffCallback
+) : PagingDataAdapter<Transaction, TransactionHistoryAdapter.TransactionViewHolder>(
+    transactionItemCallback
 ) {
 
     lateinit var tracker: SelectionTracker<Long>
@@ -31,10 +41,10 @@ class TransactionHistoryAdapter(
         private val adapter: TransactionHistoryAdapter
     ) : ItemKeyProvider<Long?>(SCOPE_CACHED) {
         override fun getKey(position: Int): Long? =
-            adapter.currentList[position].id
+            adapter.snapshot().items[position].id
 
         override fun getPosition(key: Long): Int =
-            adapter.currentList.indexOfFirst { it.id == key }
+            adapter.snapshot().items.indexOfFirst { it.id == key }
     }
 
     class MyItemDetailsLookup(private val recyclerView: RecyclerView) :
@@ -54,28 +64,31 @@ class TransactionHistoryAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
-            transaction: Transaction,
+            transaction: Transaction?,
             tracker: SelectionTracker<Long>,
             onItemClick: (Transaction) -> Unit
         ) = binding.apply {
-            title.text = transaction.title
-            price.text = transaction.amountSpent.toCurrency()
-            typeIcon.setTransactionTypeIcon(transaction)
-            price.setTextColorByTransactionType(transaction)
-            categoryName.setText(transaction.transactionCategory.nameStringRes)
-            categoryIcon.setTransactionCategoryIcon(transaction)
+            transaction?.let {
+                title.text = transaction.title
+                price.text = transaction.amountSpent.toCurrency()
+                typeIcon.setTransactionTypeIcon(transaction)
+                price.setTextColorByTransactionType(transaction)
+                categoryName.setText(transaction.transactionCategory.nameStringRes)
+                categoryIcon.setTransactionCategoryIcon(transaction)
 
-            root.isChecked = tracker.isSelected(transaction.id)
-            root.setOnClickListener {
-                onItemClick(transaction)
+                root.isChecked = tracker.isSelected(transaction.id)
+                root.setOnClickListener {
+                    onItemClick(transaction)
+                }
             }
+
         }
 
         fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long> =
             object : ItemDetailsLookup.ItemDetails<Long>() {
                 override fun getPosition(): Int = bindingAdapterPosition
                 override fun getSelectionKey(): Long =
-                    (bindingAdapter as TransactionHistoryAdapter).currentList[bindingAdapterPosition].id
+                    (bindingAdapter as TransactionHistoryAdapter).snapshot().items[bindingAdapterPosition].id
             }
 
     }
@@ -95,16 +108,6 @@ class TransactionHistoryAdapter(
         holder.bind(getItem(position), tracker, onItemClick)
     }
 
-    private object TransactionDiffCallback : DiffUtil.ItemCallback<Transaction>() {
-        override fun areItemsTheSame(oldItem: Transaction, newItem: Transaction): Boolean =
-            oldItem.id == newItem.id
-
-
-        override fun areContentsTheSame(oldItem: Transaction, newItem: Transaction): Boolean =
-            newItem == oldItem
-
-
-    }
 }
 
 class HeaderAdapter(

@@ -14,9 +14,6 @@ interface UseCaseModule {
     fun bindCreateTransactionUseCase(useCase: CreateTransactionUseCaseImpl): CreateTransactionUseCase
 
     @Binds
-    fun bindObserveTransactionsUseCase(useCase: ObserveTransactionsByDateUseCaseImpl): ObserveTransactionsByDateUseCase
-
-    @Binds
     fun bindDeleteTransactionUseCase(useCase: DeleteTransactionUseCaseImpl): DeleteTransactionUseCase
 
     @Binds
@@ -24,6 +21,9 @@ interface UseCaseModule {
 
     @Binds
     fun bindObserveTransactionsByTitle(useCase: ObserveTransactionsByTitleUseCaseImpl): ObserveTransactionsByTitleUseCase
+
+    @Binds
+    fun bindObserveTransactionsUseCase(useCase: ObserveTransactionsByDateUseCaseImpl): ObserveTransactionsByDateUseCase
 
     @Binds
     fun bindDeleteManyTransactionsById(useCase: DeleteManyTransactionsByIdUseCaseImpl): DeleteManyTransactionsByIdUseCase

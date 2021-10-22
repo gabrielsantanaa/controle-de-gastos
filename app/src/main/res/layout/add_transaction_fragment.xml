@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:id="@+id/add_transaction_fragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,7 +40,6 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
             app:counterEnabled="true"
             app:counterMaxLength="200">
 
-
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInputEditTextDescription"
                 android:layout_width="match_parent"
@@ -51,7 +51,8 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:scrollbarStyle="insideOverlay"
                 android:scrollbarThumbVertical="@drawable/custom_scrollbar"
                 android:scrollbars="vertical"
-                app:textInputLayoutFocusedRectEnabled="false" />
+                app:textInputLayoutFocusedRectEnabled="false"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -84,14 +85,12 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_height="wrap_content"
                 />
 
-
             <com.gabrielsantana.projects.controledegastos.ui.components.CustomButton
                 android:id="@+id/buttonExpense"
                 style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
-
 
         </com.google.android.material.button.MaterialButtonToggleGroup>
 

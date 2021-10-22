@@ -11,6 +11,9 @@
         android:label="@string/transaction_history_fragment_label"
         tools:layout="@layout/transaction_history_fragment">
 
+        <action
+            android:id="@+id/action_fragment_transaction_history_to_transactionDetailsBottomSheet"
+            app:destination="@id/transactionDetailsBottomSheet" />
     </fragment>
     <dialog
         android:id="@+id/transactionDetailsBottomSheet"
@@ -18,5 +21,8 @@
         android:label="TransactionDetailsBottomSheet"
         tools:layout="@layout/dialog_fragment_transaction_details">
 
+        <argument
+            android:name="transaction"
+            app:argType="com.gabrielsantana.projects.controledegastos.domain.model.Transaction" />
     </dialog>
 </navigation>

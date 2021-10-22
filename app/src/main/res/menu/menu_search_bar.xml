@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/test"
+        android:title="test"
+        />
+
+    <item
+        android:id="@+id/grouptest"
+        android:title="filters"
+        >
+
+        <menu>
+
+            <item
+                android:id="@+id/test2"
+                android:title="test2"
+                />
+            <item
+                android:id="@+id/test3"
+                android:title="test3"
+                />
+
+        </menu>
+
+    </item>
+
+</menu>

@@ -20,6 +20,7 @@ import com.gabrielsantana.projects.controledegastos.util.observeOnLifecycle
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialFadeThrough
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -38,7 +39,6 @@ class AddTransactionFragment : Fragment() {
 
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, /* forward= */ true)
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.Z, /* forward= */ false)
-
     }
 
     override fun onCreateView(
@@ -101,7 +101,7 @@ class AddTransactionFragment : Fragment() {
                     navigateToDashboardFragment()
                 }
                 AddTransactionViewModel.Event.ShowDatePicker -> {
-
+                    showDatePicker()
                 }
                 AddTransactionViewModel.Event.InvalidFields -> {
                     showMissingFieldsWarning()

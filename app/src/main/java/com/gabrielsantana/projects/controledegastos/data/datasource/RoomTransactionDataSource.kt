@@ -1,6 +1,7 @@
 package com.gabrielsantana.projects.controledegastos.data.datasource
 
 import androidx.lifecycle.LiveData
+import androidx.paging.PagingSource
 import com.gabrielsantana.projects.controledegastos.data.db.TransactionDatabaseDao
 import com.gabrielsantana.projects.controledegastos.domain.model.Transaction
 import com.gabrielsantana.projects.controledegastos.domain.model.TransactionType
@@ -15,7 +16,7 @@ class RoomTransactionDataSource @Inject constructor(
         dao.insert(transaction)
     }
 
-    override fun observeTransactionsByDate(date: Date): LiveData<List<Transaction>> {
+    override fun observeTransactionsByDate(date: Date): PagingSource<Int, Transaction> {
         return dao.observeTransactionsByDate(date.time)
     }
 
@@ -34,7 +35,7 @@ class RoomTransactionDataSource @Inject constructor(
         }
     }
 
-    override fun observeTransactionsByTitle(query: String): LiveData<List<Transaction>> {
+    override fun observeTransactionsByTitle(query: String): PagingSource<Int, Transaction> {
         return dao.observeTransactionsByTitle(query)
     }
 
