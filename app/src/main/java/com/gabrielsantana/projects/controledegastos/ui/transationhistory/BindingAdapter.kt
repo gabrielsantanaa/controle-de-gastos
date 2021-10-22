@@ -1,31 +1,89 @@
 package com.gabrielsantana.projects.controledegastos.ui.transationhistory
 
+import android.content.Context
+import android.graphics.Color
 import android.os.CountDownTimer
+
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
 import androidx.annotation.MenuRes
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.LifecycleOwner
+import androidx.transition.TransitionManager
 import com.gabrielsantana.projects.controledegastos.R
 import com.gabrielsantana.projects.controledegastos.databinding.TransactionHistoryFragmentBinding
+import com.gabrielsantana.projects.controledegastos.util.themeInt
+import com.google.android.material.shape.ShapeAppearanceModel
+import com.google.android.material.transition.MaterialContainerTransform
 
 class BindingAdapter(
     private val viewModel: TransactionHistoryViewModel,
     private val lifecycleOwner: LifecycleOwner,
-    private val binding: TransactionHistoryFragmentBinding
+    private val binding: TransactionHistoryFragmentBinding,
+    private val context: Context
 ) {
 
     init {
         setupFieldObservers()
         setupOnClickListeners()
+        setupLiveDataObservers()
+    }
+
+    private fun setupLiveDataObservers() {
+        viewModel.apply {
+            selectedTransactionIds.observe(lifecycleOwner) {
+                binding.toolbarSelection.title = binding.root.context.getString(R.string.toolbar_selection_title, it.size.toString())
+
+                if(it.isNotEmpty() && searchBarIsVisible()) {
+                    setSearchbarVisibility(false)
+
+                } else if (it.isEmpty() && !searchBarIsVisible()){
+                    setSearchbarVisibility(true)
+                }
+            }
+        }
+    }
+
+    private fun searchBarIsVisible() = binding.cardSearchBar.visibility == View.VISIBLE
+
+    private fun setSearchbarVisibility(showCard: Boolean) {
+        binding.run {
+            val transform = MaterialContainerTransform().apply {
+                startView = if(showCard) toolbarSelection else cardSearchBar
+                endView = if(showCard) cardSearchBar else toolbarSelection
+
+                duration = context.themeInt(R.attr.motionDurationLong1).toLong()
+                scrimColor = Color.TRANSPARENT
+
+                if(!showCard) {
+                    startShapeAppearanceModel = ShapeAppearanceModel.Builder().setAllCornerSizes(64f).build()
+                } else {
+                    endShapeAppearanceModel = ShapeAppearanceModel.Builder().setAllCornerSizes(64f).build()
+                }
+
+                addTarget(endView!!)
+
+            }
+            TransitionManager.beginDelayedTransition(binding.root, transform)
+            cardSearchBar.visibility = if(showCard) View.VISIBLE else View.GONE
+            toolbarSelection.visibility = if(showCard) View.GONE else View.VISIBLE
+        }
+
 
     }
 
     private fun setupOnClickListeners() {
-        binding.buttonMenu.setOnClickListener {
-            showMenu(it, R.menu.menu_search_bar)
+        binding.apply {
+            buttonMenu.setOnClickListener {
+                showMenu(it, R.menu.menu_search_bar)
+            }
+            toolbarSelection.setNavigationOnClickListener {
+                viewModel.clearSelection()
+
+            }
         }
+
     }
 
     private fun showMenu(view: View, @MenuRes menuRes: Int) {

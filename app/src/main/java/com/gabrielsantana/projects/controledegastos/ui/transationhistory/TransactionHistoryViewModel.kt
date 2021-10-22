@@ -1,19 +1,17 @@
 package com.gabrielsantana.projects.controledegastos.ui.transationhistory
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.switchMap
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.liveData
+import androidx.lifecycle.*
+import androidx.paging.*
 import com.gabrielsantana.projects.controledegastos.data.db.TransactionDatabaseDao
 import com.gabrielsantana.projects.controledegastos.domain.model.Transaction
 import com.gabrielsantana.projects.controledegastos.domain.usecase.ObserveTransactionsByDateUseCase
 import com.gabrielsantana.projects.controledegastos.domain.usecase.ObserveTransactionsByTitleUseCase
+import com.gabrielsantana.projects.controledegastos.util.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
@@ -21,13 +19,22 @@ import javax.inject.Inject
 class TransactionHistoryViewModel @Inject constructor(
     observeTransactionsByDateUseCase: ObserveTransactionsByDateUseCase,
     observeTransactionsByTitleUseCase: ObserveTransactionsByTitleUseCase,
+): ViewModel() {
 
-    ) : ViewModel() {
+    sealed class Event {
+        object ClearSelection: Event()
+    }
 
     sealed class TransactionFilter {
         class TransactionsByDate(val date: Date) : TransactionFilter()
         class TransactionsByTitle(val query: String) : TransactionFilter()
     }
+
+    private val _eventChannel = Channel<Event>(Channel.BUFFERED)
+    val eventChannel = _eventChannel.receiveAsFlow()
+
+    private val _selectedTransactionIds = MutableLiveData<List<Long>>()
+    val selectedTransactionIds = _selectedTransactionIds.asLiveData()
 
     private val _transactionFilter = MutableLiveData<TransactionFilter>(
         TransactionFilter.TransactionsByDate(Date())
@@ -49,7 +56,7 @@ class TransactionHistoryViewModel @Inject constructor(
                     observeTransactionsByTitleUseCase.invoke(filter.query)
                 }
             }
-        }.liveData
+        }.liveData.cachedIn(viewModelScope)
     }
 
 
@@ -59,6 +66,14 @@ class TransactionHistoryViewModel @Inject constructor(
 
     fun filterTransactionsByDate() {
         _transactionFilter.value = TransactionFilter.TransactionsByDate(Date())
+    }
+
+    fun updateSelectedTransactions(value: List<Long>) {
+        _selectedTransactionIds.value = value
+    }
+
+    fun clearSelection() = viewModelScope.launch {
+        _eventChannel.send(Event.ClearSelection)
     }
 
 }

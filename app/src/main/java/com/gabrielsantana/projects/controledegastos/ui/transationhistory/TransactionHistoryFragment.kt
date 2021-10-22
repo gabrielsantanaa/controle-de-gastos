@@ -12,6 +12,7 @@ import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import com.gabrielsantana.projects.controledegastos.databinding.TransactionHistoryFragmentBinding
+import com.gabrielsantana.projects.controledegastos.util.observeOnLifecycle
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -25,16 +26,20 @@ class TransactionHistoryFragment : Fragment() {
     private val binding
         get() = _binding!!
 
-    private val viewModel: TransactionHistoryViewModel by viewModels()
+    private val viewModel by viewModels<TransactionHistoryViewModel>()
 
     private lateinit var selectionTracker: SelectionTracker<Long>
 
     private val adapter by lazy {
         TransactionHistoryAdapter(
             onItemClick = { transaction ->
-                val direction = TransactionHistoryFragmentDirections
-                    .actionFragmentTransactionHistoryToTransactionDetailsBottomSheet(transaction)
-                findNavController().navigate(direction)
+                try {
+                    val direction = TransactionHistoryFragmentDirections
+                        .actionFragmentTransactionHistoryToTransactionDetailsBottomSheet(transaction)
+                    findNavController().navigate(direction)
+                } catch (e: Exception) {
+
+                }
             }
         )
     }
@@ -59,11 +64,22 @@ class TransactionHistoryFragment : Fragment() {
         setupRecyclerView(savedInstanceState)
         setupLiveDataObservers()
         setupTransition()
+        setupEventObserver()
         setupBindingAdapter()
     }
 
+    private fun setupEventObserver() {
+        viewModel.eventChannel.observeOnLifecycle(viewLifecycleOwner) { event ->
+            when (event) {
+                TransactionHistoryViewModel.Event.ClearSelection -> {
+                    selectionTracker.clearSelection()
+                }
+            }
+        }
+    }
+
     private fun setupBindingAdapter() =
-        BindingAdapter(viewModel, viewLifecycleOwner, binding)
+        BindingAdapter(viewModel, viewLifecycleOwner, binding, requireContext())
 
     private fun setupTransition() {
         ViewGroupCompat.setTransitionGroup(binding.root, true)
@@ -73,7 +89,7 @@ class TransactionHistoryFragment : Fragment() {
         viewModel.apply {
             lifecycleScope.launch {
                 //this delay prevents UI lag in transition caused by recycler items rendering
-                delay(300)
+                delay(350)
                 transactions.observe(viewLifecycleOwner) {
                     adapter.submitData(lifecycle, it)
                 }
@@ -102,8 +118,7 @@ class TransactionHistoryFragment : Fragment() {
 
                 selectionTracker.addObserver(object : SelectionTracker.SelectionObserver<Long>() {
                     override fun onSelectionChanged() {
-                        (requireActivity() as AppCompatActivity)
-                            .supportActionBar?.title = selectionTracker.selection.size().toString()
+                        viewModel.updateSelectedTransactions(selectionTracker.selection.toList())
                     }
                 })
             }

@@ -2,7 +2,6 @@ package com.gabrielsantana.projects.controledegastos.util
 
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.EditText
 
 class CurrencyTextWatcher(
@@ -15,12 +14,12 @@ class CurrencyTextWatcher(
     private var updating = false
     private var count = 0
 
-    override fun afterTextChanged(s: Editable?) {
+    override fun afterTextChanged(editable: Editable?) {
         if (updating) return
-        Log.d("count", "afterTextChanged: $count")
+
         count++
 
-        val newValue = s.toString()
+        val newValue = editable.toString()
         if (currentValue != newValue) {
 
             updating = true
