@@ -4,10 +4,12 @@ import androidx.lifecycle.*
 import androidx.paging.*
 import com.gabrielsantana.projects.controledegastos.data.db.TransactionDatabaseDao
 import com.gabrielsantana.projects.controledegastos.domain.model.Transaction
+import com.gabrielsantana.projects.controledegastos.domain.usecase.DeleteManyTransactionsByIdUseCase
 import com.gabrielsantana.projects.controledegastos.domain.usecase.ObserveTransactionsByDateUseCase
 import com.gabrielsantana.projects.controledegastos.domain.usecase.ObserveTransactionsByTitleUseCase
 import com.gabrielsantana.projects.controledegastos.util.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -19,10 +21,12 @@ import javax.inject.Inject
 class TransactionHistoryViewModel @Inject constructor(
     observeTransactionsByDateUseCase: ObserveTransactionsByDateUseCase,
     observeTransactionsByTitleUseCase: ObserveTransactionsByTitleUseCase,
+    private val deleteManyTransactionsByIdUseCase: DeleteManyTransactionsByIdUseCase
 ): ViewModel() {
 
     sealed class Event {
         object ClearSelection: Event()
+        object ShowTransactionsDeletionConfirmation: Event()
     }
 
     sealed class TransactionFilter {
@@ -74,6 +78,14 @@ class TransactionHistoryViewModel @Inject constructor(
 
     fun clearSelection() = viewModelScope.launch {
         _eventChannel.send(Event.ClearSelection)
+    }
+
+    fun showTransactionsDeletionConfirmation() = viewModelScope.launch {
+        _eventChannel.send(Event.ShowTransactionsDeletionConfirmation)
+    }
+
+    fun deleteSelectedTransactions() = viewModelScope.launch(Dispatchers.IO) {
+        deleteManyTransactionsByIdUseCase.invoke(_selectedTransactionIds.value!!)
     }
 
 }

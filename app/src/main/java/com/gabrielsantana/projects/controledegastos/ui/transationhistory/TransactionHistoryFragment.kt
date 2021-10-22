@@ -11,8 +11,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
+import com.gabrielsantana.projects.controledegastos.R
 import com.gabrielsantana.projects.controledegastos.databinding.TransactionHistoryFragmentBinding
 import com.gabrielsantana.projects.controledegastos.util.observeOnLifecycle
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -74,8 +76,22 @@ class TransactionHistoryFragment : Fragment() {
                 TransactionHistoryViewModel.Event.ClearSelection -> {
                     selectionTracker.clearSelection()
                 }
+                TransactionHistoryViewModel.Event.ShowTransactionsDeletionConfirmation -> {
+                    showTransactionsDeletionConfirmation()
+                }
             }
         }
+    }
+
+    private fun showTransactionsDeletionConfirmation() {
+        MaterialAlertDialogBuilder(requireContext(), R.style.ThemeOverlay_App_MaterialAlertDialog)
+            .setTitle(R.string.transactions_deletion_confirmation_dialog_title)
+            .setMessage(R.string.transactions_deletion_confirmation_dialog_message)
+            .setPositiveButton(R.string.transactions_deletion_confirmation_dialog_positive_button) { _, _ ->
+                viewModel.deleteSelectedTransactions()
+            }
+            .setNegativeButton(R.string.transactions_deletion_confirmation_dialog_negative_button, null)
+            .show()
     }
 
     private fun setupBindingAdapter() =

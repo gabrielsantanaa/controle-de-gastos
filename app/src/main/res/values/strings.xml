@@ -38,8 +38,6 @@
     <string name="dashboard_text_hint_searchbar">Search</string>
     <string name="dashboard_fragment_label">Dashboard</string>
     <string name="dashboard_recycler_transactions_header">Income and expense history</string>
-    <string name="deletion_confirmation_snackbar_message">Do you want to delete this transaction?</string>
-    <string name="deletion_confirmation_snackbar_action">Delete</string>
     <string name="toolbar_selection_title">%1$s selected items</string>
 
     <!--  Select Date Dialog Fragment  -->
@@ -48,5 +46,9 @@
 
     <!--  Transaction History Fragment  -->
     <string name="transaction_history_fragment_label">Transaction History</string>
+    <string name="transactions_deletion_confirmation_dialog_title">Delete transactions?</string>
+    <string name="transactions_deletion_confirmation_dialog_message">All selected transactions will be deleted.</string>
+    <string name="transactions_deletion_confirmation_dialog_positive_button">Delete</string>
+    <string name="transactions_deletion_confirmation_dialog_negative_button">Cancel</string>
 
 </resources>

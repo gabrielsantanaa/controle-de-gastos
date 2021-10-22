@@ -31,8 +31,6 @@
     <string name="dashboard_text_hint_searchbar">Pesquisar</string>
     <string name="dashboard_fragment_label">Painel de controle</string>
     <string name="dashboard_recycler_transactions_header">Histórico de rendimentos e despesas</string>
-    <string name="deletion_confirmation_snackbar_message">Você deseja exlcuir essa transação?</string>
-    <string name="deletion_confirmation_snackbar_action">Excluir</string>
     <string name="toolbar_selection_title">%1$s itens selecionados</string>
 
     <!--  Select Date Dialog Fragment  -->
@@ -41,6 +39,10 @@
 
     <!--  Transaction History Fragment  -->
     <string name="transaction_history_fragment_label">Histórico de transações</string>
+    <string name="transactions_deletion_confirmation_dialog_title">Deletar transações?</string>
+    <string name="transactions_deletion_confirmation_dialog_message">Todas as transações selecionadas serão excluídas.</string>
+    <string name="transactions_deletion_confirmation_dialog_positive_button">Apagar</string>
+    <string name="transactions_deletion_confirmation_dialog_negative_button">Cancelar</string>
 
 
 </resources>

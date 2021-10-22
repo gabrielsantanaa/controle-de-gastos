@@ -10,7 +10,9 @@ import android.widget.PopupMenu
 import androidx.annotation.MenuRes
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.LifecycleOwner
+import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
+import androidx.transition.TransitionSet
 import com.gabrielsantana.projects.controledegastos.R
 import com.gabrielsantana.projects.controledegastos.databinding.TransactionHistoryFragmentBinding
 import com.gabrielsantana.projects.controledegastos.util.themeInt
@@ -65,7 +67,16 @@ class BindingAdapter(
                 addTarget(endView!!)
 
             }
-            TransitionManager.beginDelayedTransition(binding.root, transform)
+            val changeBounds = ChangeBounds().apply {
+                duration = context.themeInt(R.attr.motionDurationShort2).toLong()
+
+                addTarget(binding.transactionsRecycler)
+            }
+            TransitionManager.beginDelayedTransition(binding.root, TransitionSet().apply {
+                ordering = TransitionSet.ORDERING_TOGETHER
+                addTransition(transform)
+                addTransition(changeBounds)
+            })
             cardSearchBar.visibility = if(showCard) View.VISIBLE else View.GONE
             toolbarSelection.visibility = if(showCard) View.GONE else View.VISIBLE
         }
@@ -81,6 +92,15 @@ class BindingAdapter(
             toolbarSelection.setNavigationOnClickListener {
                 viewModel.clearSelection()
 
+            }
+            toolbarSelection.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.ic_delete_transactions -> {
+                        viewModel.showTransactionsDeletionConfirmation()
+                        true
+                    }
+                    else -> false
+                }
             }
         }
 
