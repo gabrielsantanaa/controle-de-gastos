@@ -13,6 +13,15 @@ hilt {
 android {
     compileSdk 31
 
+    signingConfigs {
+        release {
+            storeFile file('/home/gabriels/Desktop/upload-keystore.jks')
+            storePassword '125454921245'
+            keyPassword '125454921245'
+            keyAlias 'key0'
+        }
+    }
+
     defaultConfig {
         applicationId "com.gabrielsantana.projects.controledegastos"
         minSdk 21
@@ -26,6 +35,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

@@ -18,16 +18,19 @@ import androidx.navigation.ui.setupWithNavController
 import com.gabrielsantana.projects.controledegastos.R
 import com.gabrielsantana.projects.controledegastos.databinding.ActivityMainBinding
 import com.gabrielsantana.projects.controledegastos.util.circularAnimation
+import com.google.android.material.shape.CornerFamily
+import com.google.android.material.shape.MaterialShapeDrawable
+import com.google.android.material.shape.ShapeAppearanceModel
 import dagger.hilt.android.AndroidEntryPoint
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 import java.security.AccessControlContext
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), KeyboardVisibilityEventListener {
 
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var navController: NavController
-    private lateinit var appBarConfiguration: AppBarConfiguration
 
     private var _binding: ActivityMainBinding? = null
     private val binding
@@ -39,58 +42,25 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar)
-
         initNavHost()
-        initAppBarConfiguration()
         setupBottomNav()
 
-        binding.appbarLayout.layoutTransition = LayoutTransition().apply {
+        KeyboardVisibilityEvent.setEventListener(this,this)
 
-        }
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            supportActionBar?.hide()
-            when (destination.id) {
-                R.id.fragment_dashboard -> {
-                    setupToolbarForDashboard()
-                }
-                R.id.fragment_transaction_history -> {
-                    setupToolbarForTransactionHistory()
-                }
-                R.id.fragment_add_transaction -> {
-                    setupToolbarForAddTransaction()
-                }
-            }
-        }
-
-        KeyboardVisibilityEvent.setEventListener(this) {
-            binding.bottomNav.visibility = if(it) View.GONE else View.VISIBLE
-        }
-        supportActionBar?.hide()
-
-    }
-
-    private fun setupToolbarForAddTransaction() {
-
-    }
-
-    private fun setupToolbarForTransactionHistory() {
-
-    }
-
-    private fun setupToolbarForDashboard() {
-
-    }
-
-    private fun initAppBarConfiguration() {
-        appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.fragment_dashboard, R.id.fragment_transaction_history,  R.id.fragment_add_transaction)
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
     private fun setupBottomNav() {
         binding.bottomNav.setupWithNavController(navController)
+        setBottomNavCorners()
+    }
+
+    private fun setBottomNavCorners() {
+        val radius = resources.getDimension(R.dimen.bottom_nav_corners)
+        val customShape = ShapeAppearanceModel.Builder()
+            .setAllCorners(CornerFamily.ROUNDED, radius)
+            .build()
+        (binding.bottomNav.background as MaterialShapeDrawable)
+            .shapeAppearanceModel = customShape
     }
 
     private fun initNavHost() {
@@ -105,6 +75,10 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onVisibilityChanged(isOpen: Boolean) {
+        binding.bottomNav.visibility = if(isOpen) View.GONE else View.VISIBLE
     }
 
 }

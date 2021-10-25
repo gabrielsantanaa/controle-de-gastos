@@ -34,6 +34,8 @@ class TransactionHistoryViewModel @Inject constructor(
         class TransactionsByTitle(val query: String) : TransactionFilter()
     }
 
+    var isFirstInit: Boolean = true
+
     private val _eventChannel = Channel<Event>(Channel.BUFFERED)
     val eventChannel = _eventChannel.receiveAsFlow()
 

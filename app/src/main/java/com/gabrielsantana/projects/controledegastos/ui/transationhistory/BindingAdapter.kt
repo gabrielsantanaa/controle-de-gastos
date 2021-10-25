@@ -55,7 +55,7 @@ class BindingAdapter(
                 startView = if(showCard) toolbarSelection else cardSearchBar
                 endView = if(showCard) cardSearchBar else toolbarSelection
 
-                duration = context.themeInt(R.attr.motionDurationLong1).toLong()
+                duration = context.themeInt(R.attr.motionDurationMedium1).toLong()
                 scrimColor = Color.TRANSPARENT
 
                 if(!showCard) {
@@ -64,6 +64,7 @@ class BindingAdapter(
                     endShapeAppearanceModel = ShapeAppearanceModel.Builder().setAllCornerSizes(64f).build()
                 }
 
+                //only endView should be animated
                 addTarget(endView!!)
 
             }

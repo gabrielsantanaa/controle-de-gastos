@@ -7,6 +7,7 @@ import androidx.core.view.ViewGroupCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
@@ -64,10 +65,10 @@ class TransactionHistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         setupRecyclerView(savedInstanceState)
-        setupLiveDataObservers()
         setupTransition()
         setupEventObserver()
         setupBindingAdapter()
+        setupLiveDataObservers()
     }
 
     private fun setupEventObserver() {
@@ -103,12 +104,15 @@ class TransactionHistoryFragment : Fragment() {
 
     private fun setupLiveDataObservers() {
         viewModel.apply {
-            lifecycleScope.launch {
-                //this delay prevents UI lag in transition caused by recycler items rendering
-                delay(350)
-                transactions.observe(viewLifecycleOwner) {
-                    adapter.submitData(lifecycle, it)
+            transactions.observe(viewLifecycleOwner) {
+                lifecycleScope.launch {
+                    if (viewModel.isFirstInit) {
+                        delay(350)
+                        viewModel.isFirstInit = false
+                    }
+                    adapter.submitData(it)
                 }
+
             }
         }
     }
