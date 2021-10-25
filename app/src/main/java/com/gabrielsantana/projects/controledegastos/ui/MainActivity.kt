@@ -1,30 +1,20 @@
 package com.gabrielsantana.projects.controledegastos.ui
 
-import android.animation.LayoutTransition
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.transition.ChangeBounds
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.gabrielsantana.projects.controledegastos.R
 import com.gabrielsantana.projects.controledegastos.databinding.ActivityMainBinding
-import com.gabrielsantana.projects.controledegastos.util.circularAnimation
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 import dagger.hilt.android.AndroidEntryPoint
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
-import java.security.AccessControlContext
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), KeyboardVisibilityEventListener {
@@ -45,7 +35,7 @@ class MainActivity : AppCompatActivity(), KeyboardVisibilityEventListener {
         initNavHost()
         setupBottomNav()
 
-        KeyboardVisibilityEvent.setEventListener(this,this)
+        KeyboardVisibilityEvent.setEventListener(this, this)
 
     }
 
@@ -64,7 +54,8 @@ class MainActivity : AppCompatActivity(), KeyboardVisibilityEventListener {
     }
 
     private fun initNavHost() {
-        navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
     }
 
@@ -78,7 +69,7 @@ class MainActivity : AppCompatActivity(), KeyboardVisibilityEventListener {
     }
 
     override fun onVisibilityChanged(isOpen: Boolean) {
-        binding.bottomNav.visibility = if(isOpen) View.GONE else View.VISIBLE
+        binding.bottomNav.visibility = if (isOpen) View.GONE else View.VISIBLE
     }
 
 }

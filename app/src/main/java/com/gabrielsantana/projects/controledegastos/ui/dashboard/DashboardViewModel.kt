@@ -1,9 +1,10 @@
 package com.gabrielsantana.projects.controledegastos.ui.dashboard
 
-import androidx.lifecycle.*
-import com.gabrielsantana.projects.controledegastos.domain.model.Transaction
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.gabrielsantana.projects.controledegastos.domain.model.TransactionType
-import com.gabrielsantana.projects.controledegastos.domain.usecase.*
+import com.gabrielsantana.projects.controledegastos.domain.usecase.GetTotalAmountByTransactionTypeUseCase
 import com.gabrielsantana.projects.controledegastos.util.asLiveData
 import com.gabrielsantana.projects.controledegastos.util.decreaseYear
 import com.gabrielsantana.projects.controledegastos.util.increaseYear

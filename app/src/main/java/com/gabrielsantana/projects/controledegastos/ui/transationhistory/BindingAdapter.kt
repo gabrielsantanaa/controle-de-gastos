@@ -35,12 +35,15 @@ class BindingAdapter(
     private fun setupLiveDataObservers() {
         viewModel.apply {
             selectedTransactionIds.observe(lifecycleOwner) {
-                binding.toolbarSelection.title = binding.root.context.getString(R.string.toolbar_selection_title, it.size.toString())
+                binding.toolbarSelection.title = binding.root.context.getString(
+                    R.string.toolbar_selection_title,
+                    it.size.toString()
+                )
 
-                if(it.isNotEmpty() && searchBarIsVisible()) {
+                if (it.isNotEmpty() && searchBarIsVisible()) {
                     setSearchbarVisibility(false)
 
-                } else if (it.isEmpty() && !searchBarIsVisible()){
+                } else if (it.isEmpty() && !searchBarIsVisible()) {
                     setSearchbarVisibility(true)
                 }
             }
@@ -52,16 +55,18 @@ class BindingAdapter(
     private fun setSearchbarVisibility(showCard: Boolean) {
         binding.run {
             val transform = MaterialContainerTransform().apply {
-                startView = if(showCard) toolbarSelection else cardSearchBar
-                endView = if(showCard) cardSearchBar else toolbarSelection
+                startView = if (showCard) toolbarSelection else cardSearchBar
+                endView = if (showCard) cardSearchBar else toolbarSelection
 
                 duration = context.themeInt(R.attr.motionDurationMedium1).toLong()
                 scrimColor = Color.TRANSPARENT
 
-                if(!showCard) {
-                    startShapeAppearanceModel = ShapeAppearanceModel.Builder().setAllCornerSizes(64f).build()
+                if (!showCard) {
+                    startShapeAppearanceModel =
+                        ShapeAppearanceModel.Builder().setAllCornerSizes(64f).build()
                 } else {
-                    endShapeAppearanceModel = ShapeAppearanceModel.Builder().setAllCornerSizes(64f).build()
+                    endShapeAppearanceModel =
+                        ShapeAppearanceModel.Builder().setAllCornerSizes(64f).build()
                 }
 
                 //only endView should be animated
@@ -78,8 +83,8 @@ class BindingAdapter(
                 addTransition(transform)
                 addTransition(changeBounds)
             })
-            cardSearchBar.visibility = if(showCard) View.VISIBLE else View.GONE
-            toolbarSelection.visibility = if(showCard) View.GONE else View.VISIBLE
+            cardSearchBar.visibility = if (showCard) View.VISIBLE else View.GONE
+            toolbarSelection.visibility = if (showCard) View.GONE else View.VISIBLE
         }
 
 
@@ -100,9 +105,14 @@ class BindingAdapter(
                         viewModel.showTransactionsDeletionConfirmation()
                         true
                     }
+                    R.id.ic_select_all_transactions -> {
+                        viewModel.selectAllTransactions()
+                        true
+                    }
                     else -> false
                 }
             }
+
         }
 
     }
@@ -123,18 +133,18 @@ class BindingAdapter(
     }
 
     private fun setupFieldObservers() {
-       binding.editTextSearchBar.addTextChangedListener {
-           if (it.isNullOrEmpty()) {
-               viewModel.filterTransactionsByDate()
-           } else {
-               object: CountDownTimer(250, 250) {
-                   override fun onTick(millisUntilFinished: Long) { }
+        binding.editTextSearchBar.addTextChangedListener {
+            if (it.isNullOrEmpty()) {
+                viewModel.filterTransactionsByDate()
+            } else {
+                object : CountDownTimer(250, 250) {
+                    override fun onTick(millisUntilFinished: Long) {}
 
-                   override fun onFinish() {
-                       viewModel.filterTransactionByTitle(it.toString())
-                   }
-               }.start()
-           }
-       }
+                    override fun onFinish() {
+                        viewModel.filterTransactionByTitle(it.toString())
+                    }
+                }.start()
+            }
+        }
     }
 }

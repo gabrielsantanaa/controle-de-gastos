@@ -19,7 +19,7 @@ import com.gabrielsantana.projects.controledegastos.util.setTransactionCategoryI
 import com.gabrielsantana.projects.controledegastos.util.setTransactionTypeIcon
 import com.gabrielsantana.projects.controledegastos.util.toCurrency
 
-val transactionItemCallback = object: DiffUtil.ItemCallback<Transaction>() {
+val transactionItemCallback = object : DiffUtil.ItemCallback<Transaction>() {
     override fun areItemsTheSame(oldItem: Transaction, newItem: Transaction): Boolean =
         oldItem.id == newItem.id
 

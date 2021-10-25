@@ -1,29 +1,17 @@
 package com.gabrielsantana.projects.controledegastos.ui.dashboard
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
-import androidx.core.view.ViewCompat
 import androidx.core.view.ViewGroupCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.selection.SelectionPredicates
-import androidx.recyclerview.selection.SelectionTracker
-import androidx.recyclerview.selection.StorageStrategy
-import androidx.transition.*
-import com.gabrielsantana.projects.controledegastos.R
 import com.gabrielsantana.projects.controledegastos.databinding.DashboardFragmentBinding
-import com.gabrielsantana.projects.controledegastos.domain.model.Transaction
 import com.gabrielsantana.projects.controledegastos.ui.selectdate.SelectDateDialogFragment
-import com.gabrielsantana.projects.controledegastos.util.*
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.transition.MaterialFadeThrough
+import com.gabrielsantana.projects.controledegastos.util.observeOnLifecycle
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
 class DashboardFragment : Fragment() {

@@ -4,8 +4,15 @@
 
     <item
         android:title=""
+        android:id="@+id/ic_select_all_transactions"
+        android:icon="@drawable/ic_round_select_all_24"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:title=""
         android:id="@+id/ic_delete_transactions"
         android:icon="@drawable/ic_round_delete_24"
         app:showAsAction="always"/>
+
 
 </menu>

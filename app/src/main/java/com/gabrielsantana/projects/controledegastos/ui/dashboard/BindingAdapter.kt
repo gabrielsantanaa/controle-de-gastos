@@ -1,18 +1,13 @@
 package com.gabrielsantana.projects.controledegastos.ui.dashboard
 
 import android.content.Context
-import android.graphics.Color
-import android.view.View
-import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat
 import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.LifecycleOwner
-import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.*
 import com.gabrielsantana.projects.controledegastos.R
 import com.gabrielsantana.projects.controledegastos.databinding.DashboardFragmentBinding
-import com.gabrielsantana.projects.controledegastos.util.*
-import com.google.android.material.transition.MaterialContainerTransform
+import com.gabrielsantana.projects.controledegastos.util.formatMonthAndYear
+import com.gabrielsantana.projects.controledegastos.util.toCurrency
 
 
 class BindingAdapter(
@@ -72,7 +67,6 @@ class BindingAdapter(
         }
 
     }
-
 
 
     private fun showAmounts() = binding.apply {

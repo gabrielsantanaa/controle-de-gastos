@@ -2,12 +2,10 @@ package com.gabrielsantana.projects.controledegastos.ui.transationhistory
 
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewGroupCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
@@ -19,7 +17,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -29,20 +26,18 @@ class TransactionHistoryFragment : Fragment() {
     private val binding
         get() = _binding!!
 
-    private val viewModel by viewModels<TransactionHistoryViewModel>()
+    internal val viewModel by viewModels<TransactionHistoryViewModel>()
 
     private lateinit var selectionTracker: SelectionTracker<Long>
 
     private val adapter by lazy {
         TransactionHistoryAdapter(
             onItemClick = { transaction ->
-                try {
+
                     val direction = TransactionHistoryFragmentDirections
                         .actionFragmentTransactionHistoryToTransactionDetailsBottomSheet(transaction)
                     findNavController().navigate(direction)
-                } catch (e: Exception) {
 
-                }
             }
         )
     }
@@ -80,8 +75,15 @@ class TransactionHistoryFragment : Fragment() {
                 TransactionHistoryViewModel.Event.ShowTransactionsDeletionConfirmation -> {
                     showTransactionsDeletionConfirmation()
                 }
+                TransactionHistoryViewModel.Event.SelectAllTransactions -> {
+                    selectAllTransactions()
+                }
             }
         }
+    }
+
+    private fun selectAllTransactions() {
+        selectionTracker.setItemsSelected(adapter.snapshot().items.map { it.id }, true)
     }
 
     private fun showTransactionsDeletionConfirmation() {
@@ -91,7 +93,10 @@ class TransactionHistoryFragment : Fragment() {
             .setPositiveButton(R.string.transactions_deletion_confirmation_dialog_positive_button) { _, _ ->
                 viewModel.deleteSelectedTransactions()
             }
-            .setNegativeButton(R.string.transactions_deletion_confirmation_dialog_negative_button, null)
+            .setNegativeButton(
+                R.string.transactions_deletion_confirmation_dialog_negative_button,
+                null
+            )
             .show()
     }
 

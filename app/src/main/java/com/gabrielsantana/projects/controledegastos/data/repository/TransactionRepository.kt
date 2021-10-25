@@ -1,6 +1,5 @@
 package com.gabrielsantana.projects.controledegastos.data.repository
 
-import androidx.lifecycle.LiveData
 import androidx.paging.PagingSource
 import com.gabrielsantana.projects.controledegastos.data.datasource.TransactionDataSource
 import com.gabrielsantana.projects.controledegastos.domain.model.Transaction
