@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import com.gabrielsantana.projects.controledegastos.data.db.TransactionDatabaseDao
 import com.gabrielsantana.projects.controledegastos.domain.model.Transaction
 import com.gabrielsantana.projects.controledegastos.domain.model.TransactionType
+import com.gabrielsantana.projects.controledegastos.ui.transationhistory.TransactionHistoryViewModel.TransactionFilter
 import java.util.*
 import javax.inject.Inject
 
@@ -15,8 +16,15 @@ class RoomTransactionDataSource @Inject constructor(
         dao.insert(transaction)
     }
 
-    override fun observeTransactionsByDate(date: Date): PagingSource<Int, Transaction> {
-        return dao.observeTransactionsByDate(date.time)
+    override fun observeTransactionsByTransactionFilter(filter: TransactionFilter): PagingSource<Int, Transaction> {
+        return when (filter) {
+            is TransactionFilter.TransactionsByDate -> {
+                dao.observeTransactionsByDate(filter.date.time)
+            }
+            is TransactionFilter.TransactionsByTitle -> {
+                dao.observeTransactionsByTitle("%${filter.query}%")
+            }
+        }
     }
 
     override suspend fun deleteTransaction(transaction: Transaction) {
@@ -32,10 +40,6 @@ class RoomTransactionDataSource @Inject constructor(
         } catch (e: Exception) {
             0.0
         }
-    }
-
-    override fun observeTransactionsByTitle(query: String): PagingSource<Int, Transaction> {
-        return dao.observeTransactionsByTitle(query)
     }
 
     override fun deleteManyTransactionsById(transactions: List<Long>) {

@@ -20,10 +20,9 @@ interface UseCaseModule {
     fun bindGetTotalAmountByUserTransactionType(useCase: GetTotalAmountByTransactionTypeUseCaseImpl): GetTotalAmountByTransactionTypeUseCase
 
     @Binds
-    fun bindObserveTransactionsByTitle(useCase: ObserveTransactionsByTitleUseCaseImpl): ObserveTransactionsByTitleUseCase
-
-    @Binds
-    fun bindObserveTransactionsUseCase(useCase: ObserveTransactionsByDateUseCaseImpl): ObserveTransactionsByDateUseCase
+    fun bindObserveTransactionsByTransactionFilterUseCase(
+        useCase: ObserveTransactionsByTransactionFilterUseCaseImpl
+    ): ObserveTransactionsByTransactionFilterUseCase
 
     @Binds
     fun bindDeleteManyTransactionsById(useCase: DeleteManyTransactionsByIdUseCaseImpl): DeleteManyTransactionsByIdUseCase

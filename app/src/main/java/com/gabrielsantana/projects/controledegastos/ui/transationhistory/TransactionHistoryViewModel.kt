@@ -4,8 +4,7 @@ import androidx.lifecycle.*
 import androidx.paging.*
 import com.gabrielsantana.projects.controledegastos.domain.model.Transaction
 import com.gabrielsantana.projects.controledegastos.domain.usecase.DeleteManyTransactionsByIdUseCase
-import com.gabrielsantana.projects.controledegastos.domain.usecase.ObserveTransactionsByDateUseCase
-import com.gabrielsantana.projects.controledegastos.domain.usecase.ObserveTransactionsByTitleUseCase
+import com.gabrielsantana.projects.controledegastos.domain.usecase.ObserveTransactionsByTransactionFilterUseCase
 import com.gabrielsantana.projects.controledegastos.util.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -17,8 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TransactionHistoryViewModel @Inject constructor(
-    observeTransactionsByDateUseCase: ObserveTransactionsByDateUseCase,
-    observeTransactionsByTitleUseCase: ObserveTransactionsByTitleUseCase,
+    observeTransactionsByTransactionFilterUseCase: ObserveTransactionsByTransactionFilterUseCase,
     private val deleteManyTransactionsByIdUseCase: DeleteManyTransactionsByIdUseCase
 ) : ViewModel() {
 
@@ -53,14 +51,7 @@ class TransactionHistoryViewModel @Inject constructor(
                 maxSize = 100
             )
         ) {
-            when (filter) {
-                is TransactionFilter.TransactionsByDate -> {
-                    observeTransactionsByDateUseCase.invoke(filter.date)
-                }
-                is TransactionFilter.TransactionsByTitle -> {
-                    observeTransactionsByTitleUseCase.invoke(filter.query)
-                }
-            }
+            observeTransactionsByTransactionFilterUseCase.invoke(filter)
         }.liveData.cachedIn(viewModelScope)
     }
 
